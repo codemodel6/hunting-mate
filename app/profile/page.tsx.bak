@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ type Profile = {
   hasActiveMatch?: boolean;
 };
 
-export default function ProfilePage() {
+export default function Page() {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [editedProfile, setEditedProfile] = useState({

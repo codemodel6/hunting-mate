@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { signup } from "../utils/api";
 
-export default function SignupPage() {
+export default function Page() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",

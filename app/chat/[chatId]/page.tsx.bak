@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import {
   acceptMatch,
   getChat,
@@ -17,7 +17,7 @@ import {
   sendMessage,
   shareLocation,
   unlockAdditionalMatch,
-} from "../utils/api";
+} from "../../utils/api";
 
 type Message = {
   messageId: number;
@@ -45,11 +45,12 @@ type Chat = {
   };
 };
 
-type ChatPageProps = {
-  chatId: string;
-};
-
-export default function ChatPage({ chatId }: ChatPageProps) {
+export default function Page({
+  params,
+}: {
+  params: Promise<{ chatId: string }>;
+}) {
+  const { chatId } = use(params);
   const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [chat, setChat] = useState<Chat | null>(null);
