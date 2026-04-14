@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { setAuthToken, setUserId, signin } from "../utils/api";
+import { supabase } from "@/lib/superbase";
 
 export default function Page() {
   const router = useRouter();
@@ -13,22 +13,32 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    setError(null);
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  setLoading(true);
+  setError(null);
 
-    try {
-      const response = await signin(email, password);
-      setAuthToken(response.accessToken);
-      setUserId(response.userId);
-      router.push("/home");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "로그인에 실패했습니다.");
-    } finally {
-      setLoading(false);
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error("LOGIN ERROR:", error);
+      throw error;
     }
-  };
+
+    console.log("LOGIN SUCCESS:", data);
+
+    router.push("/home");
+  } catch (err) {
+    console.error("CATCH ERROR:", err);
+    setError(err instanceof Error ? err.message : "로그인 실패");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-100 via-white to-orange-100 p-4">

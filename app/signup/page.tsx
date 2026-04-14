@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { signup } from "../utils/api";
+import { supabase } from "@/lib/superbase";
 
 export default function Page() {
   const router = useRouter();
@@ -23,20 +24,30 @@ export default function Page() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    setError(null);
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  setLoading(true);
+  setError(null);
 
-    try {
-      await signup(formData);
-      router.push("/login");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "회원가입에 실패했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) throw error;
+
+    // 👉 추가 정보는 user_metadata로 저장
+    // (name, height, age 등)
+    // 필요하면 여기서 insert 따로 해야 함 (아래 설명)
+
+    router.push("/login");
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "회원가입 실패");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-100 via-white to-orange-100 p-4">
