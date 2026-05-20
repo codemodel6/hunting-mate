@@ -9,11 +9,25 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
+    let cancelled = false;
     const timer = window.setTimeout(() => {
-      router.replace(isAuthenticated() ? "/home" : "/login");
+      void isAuthenticated()
+        .then((authenticated) => {
+          if (!cancelled) {
+            router.replace(authenticated ? "/home" : "/login");
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            router.replace("/login");
+          }
+        });
     }, 1200);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
   }, [router]);
 
   return (

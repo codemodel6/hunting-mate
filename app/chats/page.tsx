@@ -23,13 +23,15 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace("/login");
-      return;
-    }
-
     const fetchData = async () => {
       try {
+        const authenticated = await isAuthenticated();
+
+        if (!authenticated) {
+          router.replace("/login");
+          return;
+        }
+
         const [chatsResponse, profileResponse] = await Promise.all([
           getChats(),
           getProfile(),

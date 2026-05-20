@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { signup } from "../utils/api";
 import { supabase } from "@/lib/superbase";
 
 export default function Page() {
@@ -33,6 +32,14 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
+      options: {
+        data: {
+          name: formData.name,
+          height: formData.height,
+          age: formData.age,
+          location: formData.location,
+        },
+      },
     });
 
     if (error) throw error;

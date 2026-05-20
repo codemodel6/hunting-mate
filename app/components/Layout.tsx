@@ -22,9 +22,12 @@ export default function Layout({ children, hearts }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
-    clearAuth();
-    router.push("/login");
+  const handleLogout = async () => {
+    try {
+      await clearAuth();
+    } finally {
+      router.push("/login");
+    }
   };
 
   return (

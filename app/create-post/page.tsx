@@ -15,13 +15,15 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace("/login");
-      return;
-    }
-
     const fetchProfile = async () => {
       try {
+        const authenticated = await isAuthenticated();
+
+        if (!authenticated) {
+          router.replace("/login");
+          return;
+        }
+
         const response = await getProfile();
         setHearts(response.profile?.hearts ?? 0);
       } catch (err) {

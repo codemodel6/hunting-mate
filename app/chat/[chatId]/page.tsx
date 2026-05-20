@@ -63,15 +63,17 @@ export default function Page({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace("/login");
-      return;
-    }
-
-    setCurrentUserId(getUserId() ?? "");
-
     const fetchData = async () => {
       try {
+        const authenticated = await isAuthenticated();
+
+        if (!authenticated) {
+          router.replace("/login");
+          return;
+        }
+
+        setCurrentUserId((await getUserId()) ?? "");
+
         const [chatResponse, messageResponse, profileResponse] = await Promise.all([
           getChat(chatId),
           getMessages(chatId),
