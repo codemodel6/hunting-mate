@@ -31,8 +31,6 @@
     "**/*.mts"
   ],
   "exclude": [
-    "node_modules",
-    "app/components/ui/**/*",
-    "shared/ui/shadcn/**/*"
+    "node_modules"
   ]
 }
