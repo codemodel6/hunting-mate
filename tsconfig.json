@@ -32,6 +32,7 @@
   ],
   "exclude": [
     "node_modules",
-    "app/components/ui/**/*"
+    "app/components/ui/**/*",
+    "shared/ui/shadcn/**/*"
   ]
 }
