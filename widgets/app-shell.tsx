@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import { clearAuth } from "@/entities/api";
+import { useSignOutMutation } from "@/features/auth/hooks";
 
 type AppShellProps = {
   children: ReactNode;
@@ -21,10 +21,11 @@ const navItems = [
 export default function AppShell({ children, hearts }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const signOutMutation = useSignOutMutation();
 
   const handleLogout = async () => {
     try {
-      await clearAuth();
+      await signOutMutation.mutateAsync();
     } finally {
       router.push("/login");
     }

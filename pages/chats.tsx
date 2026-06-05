@@ -1,45 +1,38 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import * as api from "@/entities/api";
 import type { ChatSummary as Chat } from "@/entities/chat";
+import { useChatsQuery } from "@/entities/chat/hooks";
+import { useProfileQuery } from "@/entities/profile/hooks";
+import { useAuthStatusQuery } from "@/features/auth/hooks";
 import AppShell from "@/widgets/app-shell";
 
 export default function ChatsPage() {
   const router = useRouter();
-  const [chats, setChats] = useState<Chat[]>([]);
-  const [hearts, setHearts] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: isAuthenticated } = useAuthStatusQuery();
+  const queryEnabled = isAuthenticated === true;
+  const chatsQuery = useChatsQuery(queryEnabled);
+  const profileQuery = useProfileQuery(queryEnabled);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const authenticated = await api.isAuthenticated();
+    if (isAuthenticated === false) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
 
-        if (!authenticated) {
-          router.replace("/login");
-          return;
-        }
-
-        const [chatsResponse, profileResponse] = await Promise.all([
-          api.getChats(),
-          api.getProfile(),
-        ]);
-
-        setChats(chatsResponse.chats ?? []);
-        setHearts(profileResponse.profile?.hearts ?? 0);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "채팅 목록을 불러오지 못했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchData();
-  }, [router]);
+  const chats: Chat[] = chatsQuery.data?.chats ?? [];
+  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const loading =
+    isAuthenticated === undefined || chatsQuery.isPending || profileQuery.isPending;
+  const queryError = chatsQuery.error ?? profileQuery.error;
+  const error =
+    queryError instanceof Error
+      ? queryError.message
+      : queryError
+        ? "채팅 목록을 불러오지 못했습니다."
+        : null;
 
   return (
     <AppShell hearts={hearts}>
@@ -79,4 +72,3 @@ export default function ChatsPage() {
     </AppShell>
   );
 }
-

@@ -4,32 +4,24 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { supabase } from "@/shared/supabase";
+import { useSignInMutation } from "@/features/auth/hooks";
 
 export default function SignInForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const signInMutation = useSignInMutation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (error) {
-        throw error;
-      }
-
+      await signInMutation.mutateAsync({ email, password });
       router.push("/home");
     } catch (err) {
       setError(err instanceof Error ? err.message : "로그인 실패");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -69,10 +61,10 @@ export default function SignInForm() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={signInMutation.isPending}
             className="w-full rounded-2xl bg-rose-500 px-4 py-3 font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? "로그인 중..." : "로그인"}
+            {signInMutation.isPending ? "로그인 중..." : "로그인"}
           </button>
         </form>
 

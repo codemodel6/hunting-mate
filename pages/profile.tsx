@@ -1,64 +1,59 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import * as api from "@/entities/api";
 import type { Profile } from "@/entities/profile";
+import {
+  useDeletePhotoMutation,
+  useProfileQuery,
+  useUpdateProfileMutation,
+  useUploadPhotoMutation,
+} from "@/entities/profile/hooks";
+import { useAuthStatusQuery } from "@/features/auth/hooks";
 import AppShell from "@/widgets/app-shell";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const [profile, setProfile] = useState<Profile | null>(null);
   const [editedProfile, setEditedProfile] = useState({
     name: "",
     height: "",
     age: "",
     location: "",
   });
-  const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const { data: isAuthenticated } = useAuthStatusQuery();
+  const queryEnabled = isAuthenticated === true;
+  const profileQuery = useProfileQuery(queryEnabled);
+  const updateProfileMutation = useUpdateProfileMutation();
+  const uploadPhotoMutation = useUploadPhotoMutation();
+  const deletePhotoMutation = useDeletePhotoMutation();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const authenticated = await api.isAuthenticated();
-
-        if (!authenticated) {
-          router.replace("/login");
-          return;
-        }
-
-        const response = await api.getProfile();
-        const nextProfile = response.profile ?? {};
-        setProfile(nextProfile);
-        setEditedProfile({
-          name: nextProfile.name ?? "",
-          height: nextProfile.height ?? "",
-          age: nextProfile.age ?? "",
-          location: nextProfile.location ?? "",
-        });
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "프로필을 불러오지 못했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchProfile();
-  }, [router]);
+    if (isAuthenticated === false) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSave = async () => {
     try {
-      const response = await api.updateProfile(editedProfile);
-      setProfile(response.profile ?? profile);
+      await updateProfileMutation.mutateAsync(editedProfile);
       setEditing(false);
-      setError(null);
+      setActionError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "프로필 저장에 실패했습니다.");
+      setActionError(err instanceof Error ? err.message : "프로필 저장에 실패했습니다.");
     }
+  };
+
+  const handleStartEditing = () => {
+    setEditedProfile({
+      name: profile?.name ?? "",
+      height: profile?.height ?? "",
+      age: profile?.age ?? "",
+      location: profile?.location ?? "",
+    });
+    setEditing(true);
   };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,27 +62,31 @@ export default function ProfilePage() {
       return;
     }
 
-    setUploading(true);
     try {
-      const response = await api.uploadPhoto(file);
-      setProfile((prev) => ({ ...prev, photos: response.photos ?? prev?.photos ?? [] }));
-      setError(null);
+      const response = await uploadPhotoMutation.mutateAsync(file);
+      setActionError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "사진 업로드에 실패했습니다.");
-    } finally {
-      setUploading(false);
+      setActionError(err instanceof Error ? err.message : "사진 업로드에 실패했습니다.");
     }
   };
 
   const handleDelete = async (index: number) => {
     try {
-      const response = await api.deletePhoto(index);
-      setProfile((prev) => ({ ...prev, photos: response.photos ?? prev?.photos ?? [] }));
-      setError(null);
+      await deletePhotoMutation.mutateAsync(index);
+      setActionError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "사진 삭제에 실패했습니다.");
+      setActionError(err instanceof Error ? err.message : "사진 삭제에 실패했습니다.");
     }
   };
+
+  const profile: Profile | null = profileQuery.data?.profile ?? null;
+  const error =
+    actionError ??
+    (profileQuery.error instanceof Error
+      ? profileQuery.error.message
+      : profileQuery.error
+        ? "프로필을 불러오지 못했습니다."
+        : null);
 
   return (
     <AppShell hearts={profile?.hearts ?? 0}>
@@ -101,7 +100,7 @@ export default function ProfilePage() {
               </div>
               <button
                 type="button"
-                onClick={() => (editing ? void handleSave() : setEditing(true))}
+                onClick={() => (editing ? void handleSave() : handleStartEditing())}
                 className="rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600"
               >
                 {editing ? "저장" : "수정"}
@@ -155,8 +154,8 @@ export default function ProfilePage() {
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900">프로필 사진 관리</h2>
               </div>
               <label className="rounded-2xl bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-200">
-                <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
-                {uploading ? "업로드 중..." : "사진 추가"}
+                <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploadPhotoMutation.isPending} />
+                {uploadPhotoMutation.isPending ? "업로드 중..." : "사진 추가"}
               </label>
             </div>
 
@@ -203,7 +202,7 @@ export default function ProfilePage() {
               {error}
             </div>
           )}
-          {loading && (
+          {profileQuery.isPending && (
             <div className="rounded-2xl bg-white px-4 py-3 text-sm text-slate-500 shadow-sm ring-1 ring-rose-100">
               프로필을 불러오는 중입니다...
             </div>
@@ -213,4 +212,3 @@ export default function ProfilePage() {
     </AppShell>
   );
 }
-

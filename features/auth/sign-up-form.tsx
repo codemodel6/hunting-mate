@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { supabase } from "@/shared/supabase";
+import { useSignUpMutation } from "@/features/auth/hooks";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -16,8 +16,8 @@ export default function SignUpForm() {
     age: "",
     location: "",
   });
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const signUpMutation = useSignUpMutation();
 
   const handleChange = (field: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -25,32 +25,13 @@ export default function SignUpForm() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            name: formData.name,
-            height: formData.height,
-            age: formData.age,
-            location: formData.location,
-          },
-        },
-      });
-
-      if (error) {
-        throw error;
-      }
-
+      await signUpMutation.mutateAsync(formData);
       router.push("/login");
     } catch (err) {
       setError(err instanceof Error ? err.message : "회원가입 실패");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -125,10 +106,10 @@ export default function SignUpForm() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={signUpMutation.isPending}
             className="w-full rounded-2xl bg-rose-500 px-4 py-3 font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? "가입 중..." : "회원가입"}
+            {signUpMutation.isPending ? "가입 중..." : "회원가입"}
           </button>
         </form>
 

@@ -1,34 +1,25 @@
-﻿"use client";
+"use client";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { isAuthenticated } from "@/entities/api";
+import { useAuthStatusQuery } from "@/features/auth/hooks";
 
 export default function RootPage() {
   const router = useRouter();
+  const { data: isAuthenticated, isError } = useAuthStatusQuery();
 
   useEffect(() => {
-    let cancelled = false;
     const timer = window.setTimeout(() => {
-      void isAuthenticated()
-        .then((authenticated) => {
-          if (!cancelled) {
-            router.replace(authenticated ? "/home" : "/login");
-          }
-        })
-        .catch(() => {
-          if (!cancelled) {
-            router.replace("/login");
-          }
-        });
+      if (typeof isAuthenticated === "boolean") {
+        router.replace(isAuthenticated ? "/home" : "/login");
+      } else if (isError) {
+        router.replace("/login");
+      }
     }, 1200);
 
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timer);
-    };
-  }, [router]);
+    return () => window.clearTimeout(timer);
+  }, [isAuthenticated, isError, router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#fb7185,_#f97316_55%,_#0f172a)] px-6 text-white">
@@ -48,4 +39,3 @@ export default function RootPage() {
     </div>
   );
 }
-

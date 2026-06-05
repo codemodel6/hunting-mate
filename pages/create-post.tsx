@@ -1,59 +1,55 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import * as api from "@/entities/api";
+import { useCreatePostMutation } from "@/entities/post/hooks";
+import { useProfileQuery } from "@/entities/profile/hooks";
+import { useAuthStatusQuery } from "@/features/auth/hooks";
 import AppShell from "@/widgets/app-shell";
 
 export default function CreatePostPage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [hearts, setHearts] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const { data: isAuthenticated } = useAuthStatusQuery();
+  const queryEnabled = isAuthenticated === true;
+  const profileQuery = useProfileQuery(queryEnabled);
+  const createPostMutation = useCreatePostMutation();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const authenticated = await api.isAuthenticated();
-
-        if (!authenticated) {
-          router.replace("/login");
-          return;
-        }
-
-        const response = await api.getProfile();
-        setHearts(response.profile?.hearts ?? 0);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "프로필을 불러오지 못했습니다.");
-      }
-    };
-
-    void fetchProfile();
-  }, [router]);
+    if (isAuthenticated === false) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!title.trim() || !content.trim()) {
-      setError("제목과 내용을 모두 입력해 주세요.");
+      setActionError("제목과 내용을 모두 입력해 주세요.");
       return;
     }
 
-    setLoading(true);
-    setError(null);
+    setActionError(null);
 
     try {
-      await api.createPost(title, content);
+      await createPostMutation.mutateAsync({ title, content });
       router.push("/home");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "게시글 작성에 실패했습니다.");
-    } finally {
-      setLoading(false);
+      setActionError(err instanceof Error ? err.message : "게시글 작성에 실패했습니다.");
     }
   };
+
+  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const error =
+    actionError ??
+    (profileQuery.error instanceof Error
+      ? profileQuery.error.message
+      : profileQuery.error
+        ? "프로필을 불러오지 못했습니다."
+        : null);
 
   return (
     <AppShell hearts={hearts}>
@@ -104,10 +100,10 @@ export default function CreatePostPage() {
             </button>
             <button
               type="submit"
-              disabled={loading}
+              disabled={createPostMutation.isPending}
               className="flex-1 rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? "작성 중..." : "등록"}
+              {createPostMutation.isPending ? "작성 중..." : "등록"}
             </button>
           </div>
         </form>
@@ -115,4 +111,3 @@ export default function CreatePostPage() {
     </AppShell>
   );
 }
-

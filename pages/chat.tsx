@@ -1,10 +1,20 @@
-﻿"use client";
+"use client";
 
 import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import * as api from "@/entities/api";
 import type { ChatDetail as Chat, ChatMessage as Message } from "@/entities/chat";
+import {
+  useAcceptMatchMutation,
+  useChatDetailQuery,
+  useMarkMeetSuccessMutation,
+  useRequestMatchMutation,
+  useUnlockAdditionalMatchMutation,
+} from "@/entities/chat/hooks";
+import { useLocationQuery, useShareLocationMutation } from "@/entities/location/hooks";
+import { useMessagesQuery, useSendMessageMutation } from "@/entities/message/hooks";
+import { useProfileQuery } from "@/entities/profile/hooks";
+import { useAuthStatusQuery, useCurrentUserIdQuery } from "@/features/auth/hooks";
 import AppShell from "@/widgets/app-shell";
 
 export default function ChatPage({
@@ -15,68 +25,60 @@ export default function ChatPage({
   const { chatId } = use(params);
   const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [chat, setChat] = useState<Chat | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const [hearts, setHearts] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [currentUserId, setCurrentUserId] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const { data: isAuthenticated } = useAuthStatusQuery();
+  const queryEnabled = isAuthenticated === true;
+  const currentUserIdQuery = useCurrentUserIdQuery(queryEnabled);
+  const profileQuery = useProfileQuery(queryEnabled);
+  const chatQuery = useChatDetailQuery(chatId, queryEnabled);
+  const messagesQuery = useMessagesQuery(chatId, queryEnabled);
+  const sendMessageMutation = useSendMessageMutation();
+  const requestMatchMutation = useRequestMatchMutation(chatId);
+  const acceptMatchMutation = useAcceptMatchMutation(chatId);
+  const markMeetSuccessMutation = useMarkMeetSuccessMutation(chatId);
+  const unlockAdditionalMatchMutation = useUnlockAdditionalMatchMutation(chatId);
+  const shareLocationMutation = useShareLocationMutation();
+  const locationQuery = useLocationQuery(
+    chatId,
+    chatQuery.data?.chat.otherUser.userId ?? "",
+    false,
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const authenticated = await api.isAuthenticated();
+    if (isAuthenticated === false) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
 
-        if (!authenticated) {
-          router.replace("/login");
-          return;
-        }
-
-        setCurrentUserId((await api.getUserId()) ?? "");
-
-        const [chatResponse, messageResponse, profileResponse] = await Promise.all([
-          api.getChat(chatId),
-          api.getMessages(chatId),
-          api.getProfile(),
-        ]);
-
-        setChat(chatResponse.chat ?? null);
-        setMessages(messageResponse.messages ?? []);
-        setHearts(profileResponse.profile?.hearts ?? 0);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "채팅 정보를 불러오지 못했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchData();
-    const intervalId = window.setInterval(() => {
-      void api.getMessages(chatId)
-        .then((response) => setMessages(response.messages ?? []))
-        .catch(() => undefined);
-    }, 3000);
-
-    return () => window.clearInterval(intervalId);
-  }, [chatId, router]);
+  const messages: Message[] = messagesQuery.data?.messages ?? [];
+  const chat: Chat | null = chatQuery.data?.chat ?? null;
+  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const currentUserId = currentUserIdQuery.data ?? "";
+  const loading =
+    isAuthenticated === undefined ||
+    chatQuery.isPending ||
+    messagesQuery.isPending ||
+    profileQuery.isPending ||
+    currentUserIdQuery.isPending;
+  const queryError =
+    chatQuery.error ??
+    messagesQuery.error ??
+    profileQuery.error ??
+    currentUserIdQuery.error ??
+    locationQuery.error;
+  const error =
+    actionError ??
+    (queryError instanceof Error
+      ? queryError.message
+      : queryError
+        ? "채팅 정보를 불러오지 못했습니다."
+        : null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  const refreshChat = async () => {
-    const [chatResponse, messageResponse, profileResponse] = await Promise.all([
-      api.getChat(chatId),
-      api.getMessages(chatId),
-      api.getProfile(),
-    ]);
-
-    setChat(chatResponse.chat ?? null);
-    setMessages(messageResponse.messages ?? []);
-    setHearts(profileResponse.profile?.hearts ?? 0);
-  };
 
   const handleSendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -85,12 +87,11 @@ export default function ChatPage({
     }
 
     try {
-      await api.sendMessage(chatId, newMessage.trim());
+      await sendMessageMutation.mutateAsync({ chatId, message: newMessage.trim() });
       setNewMessage("");
-      await refreshChat();
-      setError(null);
+      setActionError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "메시지 전송에 실패했습니다.");
+      setActionError(err instanceof Error ? err.message : "메시지 전송에 실패했습니다.");
     }
   };
 
@@ -98,35 +99,33 @@ export default function ChatPage({
     try {
       await action();
       setNotice(successMessage);
-      setError(null);
-      await refreshChat();
+      setActionError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "요청 처리에 실패했습니다.");
+      setActionError(err instanceof Error ? err.message : "요청 처리에 실패했습니다.");
     }
   };
 
   const handleShareLocation = () => {
     if (!navigator.geolocation) {
-      setError("이 브라우저는 위치 공유를 지원하지 않습니다.");
+      setActionError("이 브라우저는 위치 공유를 지원하지 않습니다.");
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
-          const response = await api.shareLocation(
+          await shareLocationMutation.mutateAsync({
             chatId,
-            position.coords.latitude,
-            position.coords.longitude,
-          );
-          setHearts(response.hearts ?? hearts);
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
           setNotice("현재 위치를 공유했습니다.");
-          setError(null);
+          setActionError(null);
         } catch (err) {
-          setError(err instanceof Error ? err.message : "위치 공유에 실패했습니다.");
+          setActionError(err instanceof Error ? err.message : "위치 공유에 실패했습니다.");
         }
       },
-      () => setError("위치 권한이 없어서 현재 위치를 가져오지 못했습니다."),
+      () => setActionError("위치 권한이 없어서 현재 위치를 가져오지 못했습니다."),
     );
   };
 
@@ -136,17 +135,22 @@ export default function ChatPage({
     }
 
     try {
-      const response = await api.getLocation(chatId, chat.otherUser.userId);
-      const location = response.location;
+      const response = await locationQuery.refetch();
+      const location = response.data?.location;
+
+      if (!location) {
+        throw new Error("상대 위치를 불러오지 못했습니다.");
+      }
+
       window.open(
         `https://www.google.com/maps?q=${location.lat},${location.lng}`,
         "_blank",
         "noopener,noreferrer",
       );
       setNotice("상대 위치를 지도에서 열었습니다.");
-      setError(null);
+      setActionError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "상대 위치를 불러오지 못했습니다.");
+      setActionError(err instanceof Error ? err.message : "상대 위치를 불러오지 못했습니다.");
     }
   };
 
@@ -201,7 +205,7 @@ export default function ChatPage({
               {canRequest && (
                 <button
                   type="button"
-                  onClick={() => void runAction(() => api.requestMatch(chatId), "매칭 요청을 보냈습니다.")}
+                  onClick={() => void runAction(() => requestMatchMutation.mutateAsync(), "매칭 요청을 보냈습니다.")}
                   className="rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600"
                 >
                   매칭 요청
@@ -210,7 +214,7 @@ export default function ChatPage({
               {canAccept && (
                 <button
                   type="button"
-                  onClick={() => void runAction(() => api.acceptMatch(chatId), "매칭을 수락했습니다.")}
+                  onClick={() => void runAction(() => acceptMatchMutation.mutateAsync(), "매칭을 수락했습니다.")}
                   className="rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600"
                 >
                   매칭 수락
@@ -219,7 +223,7 @@ export default function ChatPage({
               {isMatched && (
                 <button
                   type="button"
-                  onClick={() => void runAction(() => api.markMeetSuccess(chatId), "만남 성공을 기록했습니다.")}
+                  onClick={() => void runAction(() => markMeetSuccessMutation.mutateAsync(), "만남 성공을 기록했습니다.")}
                   className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                 >
                   만남 성공 표시
@@ -246,7 +250,7 @@ export default function ChatPage({
               {isMatched && (
                 <button
                   type="button"
-                  onClick={() => void runAction(() => api.unlockAdditionalMatch(), "추가 매칭을 열었습니다.")}
+                  onClick={() => void runAction(() => unlockAdditionalMatchMutation.mutateAsync(), "추가 매칭을 열었습니다.")}
                   className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                 >
                   추가 매칭 열기
@@ -304,7 +308,8 @@ export default function ChatPage({
                 />
                 <button
                   type="submit"
-                  className="rounded-2xl bg-rose-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-rose-600"
+                  disabled={sendMessageMutation.isPending}
+                  className="rounded-2xl bg-rose-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   보내기
                 </button>
@@ -316,4 +321,3 @@ export default function ChatPage({
     </AppShell>
   );
 }
-
