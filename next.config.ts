@@ -1,7 +1,42 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  pageExtensions: [
+    "page.tsx",
+    "page.ts",
+    "page.jsx",
+    "page.js",
+    "layout.tsx",
+    "layout.ts",
+    "layout.jsx",
+    "layout.js",
+    "loading.tsx",
+    "loading.ts",
+    "loading.jsx",
+    "loading.js",
+    "error.tsx",
+    "error.ts",
+    "error.jsx",
+    "error.js",
+    "global-error.tsx",
+    "global-error.ts",
+    "global-error.jsx",
+    "global-error.js",
+    "template.tsx",
+    "template.ts",
+    "template.jsx",
+    "template.js",
+    "not-found.tsx",
+    "not-found.ts",
+    "not-found.jsx",
+    "not-found.js",
+    "default.tsx",
+    "default.ts",
+    "default.jsx",
+    "default.js",
+    "route.ts",
+    "route.js",
+  ],
 };
 
 export default nextConfig;

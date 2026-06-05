@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -316,3 +316,4 @@ export default function ChatPage({
     </AppShell>
   );
 }
+
