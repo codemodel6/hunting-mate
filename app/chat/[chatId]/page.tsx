@@ -1,4 +1,4 @@
-import ChatPage from "@/pages/chat";
+﻿import ChatPage from "@/views/chat";
 
 export default function Page({
   params,
@@ -7,3 +7,4 @@ export default function Page({
 }) {
   return <ChatPage params={params} />;
 }
+

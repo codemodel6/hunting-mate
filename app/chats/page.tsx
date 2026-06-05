@@ -1,5 +1,6 @@
-import ChatsPage from "@/pages/chats";
+﻿import ChatsPage from "@/views/chats";
 
 export default function Page() {
   return <ChatsPage />;
 }
+

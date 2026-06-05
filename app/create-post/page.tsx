@@ -1,5 +1,6 @@
-import CreatePostPage from "@/pages/create-post";
+﻿import CreatePostPage from "@/views/create-post";
 
 export default function Page() {
   return <CreatePostPage />;
 }
+
