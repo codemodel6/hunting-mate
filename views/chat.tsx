@@ -54,7 +54,7 @@ export default function ChatPage({
 
   const messages: Message[] = messagesQuery.data?.messages ?? [];
   const chat: Chat | null = chatQuery.data?.chat ?? null;
-  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const trust = profileQuery.data?.profile?.hearts ?? 0;
   const currentUserId = currentUserIdQuery.data ?? "";
   const loading =
     isAuthenticated === undefined ||
@@ -159,39 +159,39 @@ export default function ChatPage({
   const canRequest = chat?.matchStatus === "none";
 
   return (
-    <AppShell hearts={hearts}>
+    <AppShell trust={trust}>
       <section className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
         <aside className="space-y-6">
-          <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-rose-100">
+          <div className="surface-panel">
             <button
               type="button"
               onClick={() => router.push("/chats")}
-              className="text-sm font-medium text-rose-600 hover:text-rose-700"
+              className="text-sm font-medium text-red-300 hover:text-red-200"
             >
               채팅 목록으로 돌아가기
             </button>
-            <h1 className="mt-4 text-3xl font-semibold text-slate-900">{chat?.otherUser.name ?? "대화 상대"}</h1>
-            <p className="mt-2 text-sm text-slate-500">상태: {chat?.matchStatus ?? "로딩 중"}</p>
+            <h1 className="mt-4 text-3xl font-semibold text-white">{chat?.otherUser.name ?? "대화 상대"}</h1>
+            <p className="mt-2 text-sm text-zinc-400">상태: {chat?.matchStatus ?? "로딩 중"}</p>
 
             {chat?.otherUser.photos?.[0] && (
               <img src={chat.otherUser.photos[0]} alt={chat.otherUser.name} className="mt-6 aspect-[4/3] w-full rounded-[1.5rem] object-cover" />
             )}
 
-            <dl className="mt-6 space-y-3 text-sm text-slate-600">
+            <dl className="mt-6 space-y-3 text-sm text-zinc-300">
               {chat?.otherUser.age && (
-                <div className="flex justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                <div className="surface-panel-soft flex justify-between">
                   <dt>나이</dt>
                   <dd>{chat.otherUser.age}</dd>
                 </div>
               )}
               {chat?.otherUser.height && (
-                <div className="flex justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                <div className="surface-panel-soft flex justify-between">
                   <dt>키</dt>
                   <dd>{chat.otherUser.height}</dd>
                 </div>
               )}
               {chat?.otherUser.location && (
-                <div className="flex justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                <div className="surface-panel-soft flex justify-between">
                   <dt>지역</dt>
                   <dd>{chat.otherUser.location}</dd>
                 </div>
@@ -199,14 +199,14 @@ export default function ChatPage({
             </dl>
           </div>
 
-          <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-rose-100">
-            <h2 className="text-xl font-semibold text-slate-900">액션</h2>
+          <div className="surface-panel">
+            <h2 className="text-xl font-semibold text-white">액션</h2>
             <div className="mt-4 grid gap-3">
               {canRequest && (
                 <button
                   type="button"
                   onClick={() => void runAction(() => requestMatchMutation.mutateAsync(), "매칭 요청을 보냈습니다.")}
-                  className="rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600"
+                  className="btn-primary"
                 >
                   매칭 요청
                 </button>
@@ -215,7 +215,7 @@ export default function ChatPage({
                 <button
                   type="button"
                   onClick={() => void runAction(() => acceptMatchMutation.mutateAsync(), "매칭을 수락했습니다.")}
-                  className="rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600"
+                  className="btn-primary"
                 >
                   매칭 수락
                 </button>
@@ -224,7 +224,7 @@ export default function ChatPage({
                 <button
                   type="button"
                   onClick={() => void runAction(() => markMeetSuccessMutation.mutateAsync(), "만남 성공을 기록했습니다.")}
-                  className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                  className="btn-secondary"
                 >
                   만남 성공 표시
                 </button>
@@ -233,7 +233,7 @@ export default function ChatPage({
                 <button
                   type="button"
                   onClick={handleShareLocation}
-                  className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                  className="btn-secondary"
                 >
                   현재 위치 공유
                 </button>
@@ -242,7 +242,7 @@ export default function ChatPage({
                 <button
                   type="button"
                   onClick={() => void handleViewLocation()}
-                  className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                  className="btn-secondary"
                 >
                   상대 위치 보기
                 </button>
@@ -251,7 +251,7 @@ export default function ChatPage({
                 <button
                   type="button"
                   onClick={() => void runAction(() => unlockAdditionalMatchMutation.mutateAsync(), "추가 매칭을 열었습니다.")}
-                  className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                  className="btn-secondary"
                 >
                   추가 매칭 열기
                 </button>
@@ -259,20 +259,20 @@ export default function ChatPage({
             </div>
           </div>
 
-          {notice && <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{notice}</div>}
-          {error && <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>}
-          {loading && <div className="rounded-2xl bg-white px-4 py-3 text-sm text-slate-500 shadow-sm ring-1 ring-rose-100">채팅 정보를 불러오는 중입니다...</div>}
+          {notice && <div className="alert-success">{notice}</div>}
+          {error && <div className="alert-error">{error}</div>}
+          {loading && <div className="surface-panel text-sm text-zinc-400">채팅 정보를 불러오는 중입니다...</div>}
         </aside>
 
-        <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-rose-100">
+        <div className="surface-panel-compact">
           <div className="flex h-[70vh] flex-col">
-            <div className="border-b border-slate-100 px-2 pb-4">
-              <h2 className="text-xl font-semibold text-slate-900">메시지</h2>
+            <div className="gradient-divider-bottom px-2 pb-4">
+              <h2 className="text-xl font-semibold text-white">메시지</h2>
             </div>
 
             <div className="flex-1 space-y-3 overflow-y-auto px-2 py-6">
               {messages.length === 0 ? (
-                <div className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">
+                <div className="surface-panel-soft px-4 py-6 text-center text-sm text-zinc-400">
                   아직 대화가 없습니다. 첫 메시지를 보내 보세요.
                 </div>
               ) : (
@@ -281,10 +281,10 @@ export default function ChatPage({
 
                   return (
                     <div key={message.messageId} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
-                      <div className={`max-w-[80%] rounded-[1.5rem] px-4 py-3 text-sm shadow-sm ${mine ? "bg-rose-500 text-white" : "bg-slate-100 text-slate-800"}`}>
-                        {!mine && <p className="mb-1 text-xs font-medium opacity-70">{message.userName}</p>}
+                      <div className={`max-w-[80%] rounded-[1.5rem] px-4 py-3 text-sm shadow-sm ${mine ? "bg-red-600 text-white shadow-[0_8px_26px_rgba(220,38,38,0.25)]" : "bg-zinc-900 text-zinc-100"}`}>
+                        {!mine && <p className="mb-1 text-xs font-medium text-zinc-400">{message.userName}</p>}
                         <p className="whitespace-pre-wrap break-words">{message.message}</p>
-                        <p className={`mt-2 text-[11px] ${mine ? "text-white/75" : "text-slate-500"}`}>
+                        <p className={`mt-2 text-[11px] ${mine ? "text-white/75" : "text-zinc-500"}`}>
                           {new Date(message.timestamp).toLocaleTimeString("ko-KR", {
                             hour: "2-digit",
                             minute: "2-digit",
@@ -298,18 +298,18 @@ export default function ChatPage({
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSendMessage} className="border-t border-slate-100 pt-4">
+            <form onSubmit={handleSendMessage} className="gradient-divider-top pt-4">
               <div className="flex gap-3">
                 <input
                   value={newMessage}
                   onChange={(event) => setNewMessage(event.target.value)}
                   placeholder="메시지를 입력해 주세요"
-                  className="flex-1 rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
+                  className="input-field flex-1"
                 />
                 <button
                   type="submit"
                   disabled={sendMessageMutation.isPending}
-                  className="rounded-2xl bg-rose-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="btn-primary px-5"
                 >
                   보내기
                 </button>

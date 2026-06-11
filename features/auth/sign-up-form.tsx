@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { useSignUpMutation } from "@/features/auth/hooks";
+import AlertModal from "@/shared/ui/alert-modal";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function SignUpForm() {
     location: "",
   });
   const [error, setError] = useState<string | null>(null);
+  const [approvalModalOpen, setApprovalModalOpen] = useState(false);
   const signUpMutation = useSignUpMutation();
 
   const handleChange = (field: keyof typeof formData, value: string) => {
@@ -26,100 +28,113 @@ export default function SignUpForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
+    setApprovalModalOpen(false);
 
     try {
       await signUpMutation.mutateAsync(formData);
-      router.push("/login");
+      setApprovalModalOpen(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "회원가입 실패");
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-100 via-white to-orange-100 p-4">
-      <div className="w-full max-w-xl rounded-[2rem] border border-white bg-white p-8 shadow-xl">
-        <p className="text-sm font-medium text-rose-500">Hunting Mate</p>
-        <h1 className="mt-2 text-3xl font-semibold text-slate-900">회원가입</h1>
-        <p className="mt-2 text-sm text-slate-500">기본 프로필을 입력하고 바로 시작해 보세요.</p>
+    <>
+      <div className="app-frame flex min-h-screen items-center justify-center p-4">
+        <div className="surface-panel w-full max-w-xl">
+          <p className="section-kicker">Hunting Mate</p>
+          <h1 className="section-title">회원가입</h1>
+          <p className="section-copy">기본 프로필을 입력하고 바로 시작해 보세요.</p>
 
-        <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
-          <div className="grid gap-4 md:grid-cols-2">
-            <label className="block text-sm font-medium text-slate-700 md:col-span-2">
-              이메일
-              <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
-                type="email"
-                value={formData.email}
-                onChange={(event) => handleChange("email", event.target.value)}
-                required
-              />
-            </label>
-            <label className="block text-sm font-medium text-slate-700 md:col-span-2">
-              비밀번호
-              <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
-                type="password"
-                value={formData.password}
-                onChange={(event) => handleChange("password", event.target.value)}
-                required
-              />
-            </label>
-            <label className="block text-sm font-medium text-slate-700 md:col-span-2">
-              이름
-              <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
-                value={formData.name}
-                onChange={(event) => handleChange("name", event.target.value)}
-                required
-              />
-            </label>
-            <label className="block text-sm font-medium text-slate-700">
-              키
-              <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
-                value={formData.height}
-                onChange={(event) => handleChange("height", event.target.value)}
-                placeholder="170"
-              />
-            </label>
-            <label className="block text-sm font-medium text-slate-700">
-              나이
-              <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
-                value={formData.age}
-                onChange={(event) => handleChange("age", event.target.value)}
-                placeholder="25"
-              />
-            </label>
-            <label className="block text-sm font-medium text-slate-700 md:col-span-2">
-              지역
-              <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
-                value={formData.location}
-                onChange={(event) => handleChange("location", event.target.value)}
-                placeholder="서울 강남구"
-              />
-            </label>
-          </div>
+          <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="label-text md:col-span-2">
+                이메일
+                <input
+                  className="input-field"
+                  type="email"
+                  value={formData.email}
+                  onChange={(event) => handleChange("email", event.target.value)}
+                  required
+                />
+              </label>
+              <label className="label-text md:col-span-2">
+                비밀번호
+                <input
+                  className="input-field"
+                  type="password"
+                  value={formData.password}
+                  onChange={(event) => handleChange("password", event.target.value)}
+                  required
+                />
+              </label>
+              <label className="label-text md:col-span-2">
+                이름
+                <input
+                  className="input-field"
+                  value={formData.name}
+                  onChange={(event) => handleChange("name", event.target.value)}
+                  required
+                />
+              </label>
+              <label className="label-text">
+                키
+                <input
+                  className="input-field"
+                  value={formData.height}
+                  onChange={(event) => handleChange("height", event.target.value)}
+                  placeholder="170"
+                />
+              </label>
+              <label className="label-text">
+                나이
+                <input
+                  className="input-field"
+                  value={formData.age}
+                  onChange={(event) => handleChange("age", event.target.value)}
+                  placeholder="25"
+                />
+              </label>
+              <label className="label-text md:col-span-2">
+                지역
+                <input
+                  className="input-field"
+                  value={formData.location}
+                  onChange={(event) => handleChange("location", event.target.value)}
+                  placeholder="서울 강남구"
+                />
+              </label>
+            </div>
 
-          {error && <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>}
+            {error && <div className="alert-error">{error}</div>}
 
-          <button
-            type="submit"
-            disabled={signUpMutation.isPending}
-            className="w-full rounded-2xl bg-rose-500 px-4 py-3 font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {signUpMutation.isPending ? "가입 중..." : "회원가입"}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={signUpMutation.isPending}
+              className="btn-primary w-full"
+            >
+              {signUpMutation.isPending ? "가입 중..." : "회원가입"}
+            </button>
+          </form>
 
-        <p className="mt-6 text-center text-sm text-slate-500">
-          이미 계정이 있나요?{" "}
-          <Link href="/login" className="font-medium text-rose-600 hover:text-rose-700">
-            로그인
-          </Link>
-        </p>
+          <p className="mt-6 text-center text-sm text-zinc-400">
+            이미 계정이 있나요?{" "}
+            <Link href="/login" className="font-medium text-red-300 hover:text-red-200">
+              로그인
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+      <AlertModal
+        open={approvalModalOpen}
+        title="승인 메일을 보냈습니다"
+        description="입력한 이메일로 승인 요청 메일이 전송되었습니다. 메일을 확인해 승인한 뒤 로그인해 주세요."
+        confirmLabel="로그인으로 이동"
+        onConfirm={() => {
+          setApprovalModalOpen(false);
+          router.push("/login");
+        }}
+      />
+    </>
   );
 }

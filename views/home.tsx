@@ -35,7 +35,7 @@ export default function HomePage() {
   };
 
   const posts: Post[] = postsQuery.data?.posts ?? [];
-  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const trust = profileQuery.data?.profile?.hearts ?? 0;
   const currentUserId = profileQuery.data?.profile?.userId ?? "";
   const loading =
     isAuthenticated === undefined || postsQuery.isPending || profileQuery.isPending;
@@ -49,38 +49,38 @@ export default function HomePage() {
         : null);
 
   return (
-    <AppShell hearts={hearts}>
+    <AppShell trust={trust}>
       <section className="space-y-6">
-        <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-rose-100">
-          <p className="text-sm font-medium text-rose-500">둘러보기</p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-900">지금 올라온 소개글</h1>
-          <p className="mt-2 text-slate-500">채팅 요청은 Next.js 라우터 경로로 바로 연결됩니다.</p>
+        <div className="surface-panel">
+          <p className="section-kicker">둘러보기</p>
+          <h1 className="section-title">지금 올라온 소개글</h1>
+          <p className="section-copy">채팅 요청은 Next.js 라우터 경로로 바로 연결됩니다.</p>
         </div>
 
-        {error && <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>}
+        {error && <div className="alert-error">{error}</div>}
 
         {loading ? (
-          <div className="rounded-[2rem] bg-white p-8 text-sm text-slate-500 shadow-sm ring-1 ring-rose-100">데이터를 불러오는 중입니다...</div>
+          <div className="surface-panel text-sm text-zinc-400">데이터를 불러오는 중입니다...</div>
         ) : posts.length === 0 ? (
-          <div className="rounded-[2rem] bg-white p-8 text-sm text-slate-500 shadow-sm ring-1 ring-rose-100">등록된 소개글이 없습니다. 첫 글을 작성해 보세요.</div>
+          <div className="surface-panel text-sm text-zinc-400">등록된 소개글이 없습니다. 첫 글을 작성해 보세요.</div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {posts.map((post) => (
-              <article key={post.postId} className="flex h-full flex-col rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-rose-100">
+              <article key={post.postId} className="surface-panel-compact surface-hover flex h-full flex-col">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">{post.userName}</p>
-                    <p className="text-xs text-slate-500">{new Date(post.createdAt).toLocaleString("ko-KR")}</p>
+                    <p className="text-sm font-medium text-white">{post.userName}</p>
+                    <p className="text-xs text-zinc-500">{new Date(post.createdAt).toLocaleString("ko-KR")}</p>
                   </div>
-                  {post.userId === currentUserId && <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">내 글</span>}
+                  {post.userId === currentUserId && <span className="badge-muted">내 글</span>}
                 </div>
-                <h2 className="mt-4 text-xl font-semibold text-slate-900">{post.title}</h2>
-                <p className="mt-3 flex-1 whitespace-pre-wrap text-sm leading-6 text-slate-600">{post.content}</p>
+                <h2 className="mt-4 text-xl font-semibold text-white">{post.title}</h2>
+                <p className="mt-3 flex-1 whitespace-pre-wrap text-sm leading-6 text-zinc-400">{post.content}</p>
                 <button
                   type="button"
                   disabled={post.userId === currentUserId || requestChatMutation.isPending}
                   onClick={() => handleChatRequest(post.userId)}
-                  className="mt-6 rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
+                  className="btn-primary mt-6 disabled:bg-zinc-700 disabled:text-zinc-400"
                 >
                   {post.userId === currentUserId ? "내 게시글입니다" : "채팅 요청하기"}
                 </button>

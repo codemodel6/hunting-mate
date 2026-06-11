@@ -42,7 +42,7 @@ export default function CreatePostPage() {
     }
   };
 
-  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const trust = profileQuery.data?.profile?.hearts ?? 0;
   const error =
     actionError ??
     (profileQuery.error instanceof Error
@@ -52,29 +52,29 @@ export default function CreatePostPage() {
         : null);
 
   return (
-    <AppShell hearts={hearts}>
+    <AppShell trust={trust}>
       <section className="mx-auto max-w-3xl space-y-6">
-        <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-rose-100">
-          <p className="text-sm font-medium text-rose-500">글 작성</p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-900">매칭 글 올리기</h1>
+        <div className="surface-panel">
+          <p className="section-kicker">글 작성</p>
+          <h1 className="section-title">매칭 글 올리기</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-rose-100">
+        <form onSubmit={handleSubmit} className="surface-panel">
           <div className="space-y-4">
-            <label className="block text-sm font-medium text-slate-700">
+            <label className="label-text">
               제목
               <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
+                className="input-field"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
                 maxLength={100}
                 placeholder="한 줄로 소개를 적어 주세요"
               />
             </label>
-            <label className="block text-sm font-medium text-slate-700">
+            <label className="label-text">
               내용
               <textarea
-                className="mt-2 min-h-56 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-rose-400"
+                className="textarea-field"
                 value={content}
                 onChange={(event) => setContent(event.target.value)}
                 maxLength={1000}
@@ -83,9 +83,9 @@ export default function CreatePostPage() {
             </label>
           </div>
 
-          <div className="mt-3 text-right text-xs text-slate-400">{content.length} / 1000</div>
+          <div className="mt-3 text-right text-xs text-zinc-500">{content.length} / 1000</div>
           {error && (
-            <div className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            <div className="alert-error mt-4">
               {error}
             </div>
           )}
@@ -94,14 +94,14 @@ export default function CreatePostPage() {
             <button
               type="button"
               onClick={() => router.push("/home")}
-              className="flex-1 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              className="btn-secondary flex-1"
             >
               취소
             </button>
             <button
               type="submit"
               disabled={createPostMutation.isPending}
-              className="flex-1 rounded-2xl bg-rose-500 px-4 py-3 text-sm font-medium text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn-primary flex-1"
             >
               {createPostMutation.isPending ? "작성 중..." : "등록"}
             </button>

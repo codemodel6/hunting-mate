@@ -8,7 +8,7 @@ import { useSignOutMutation } from "@/features/auth/hooks";
 
 type AppShellProps = {
   children: ReactNode;
-  hearts?: number;
+  trust?: number;
 };
 
 const navItems = [
@@ -18,7 +18,7 @@ const navItems = [
   { href: "/profile", label: "프로필" },
 ];
 
-export default function AppShell({ children, hearts }: AppShellProps) {
+export default function AppShell({ children, trust }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const signOutMutation = useSignOutMutation();
@@ -32,29 +32,29 @@ export default function AppShell({ children, hearts }: AppShellProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-orange-50 text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-rose-100 bg-white/90 backdrop-blur">
+    <div className="app-frame">
+      <header className="gradient-divider-bottom sticky top-0 z-40 bg-[linear-gradient(180deg,rgba(8,8,10,0.92),rgba(8,8,10,0.72))] backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <Link href="/home" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-500 text-sm font-bold text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-sm font-bold text-white shadow-[0_0_24px_rgba(220,38,38,0.32)]">
               HM
             </div>
             <div>
-              <p className="text-lg font-semibold text-rose-600">Hunting Mate</p>
-              <p className="text-xs text-slate-500">가벼운 만남부터 진지한 대화까지</p>
+              <p className="text-lg font-semibold text-white">Hunting Mate</p>
+              <p className="text-xs text-zinc-400">가벼운 만남부터 진지한 대화까지</p>
             </div>
           </Link>
 
           <div className="flex items-center gap-3">
-            {typeof hearts === "number" && (
-              <div className="rounded-full bg-rose-50 px-4 py-2 text-sm font-medium text-rose-600">
-                하트 {hearts}
+            {typeof trust === "number" && (
+              <div className="badge-accent px-4 py-2 text-sm">
+                신뢰 {trust}
               </div>
             )}
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-rose-300 hover:text-rose-600"
+              className="btn-ghost"
             >
               로그아웃
             </button>
@@ -66,7 +66,7 @@ export default function AppShell({ children, hearts }: AppShellProps) {
         {children}
       </main>
 
-      <nav className="sticky bottom-0 z-40 border-t border-rose-100 bg-white/95 backdrop-blur">
+      <nav className="gradient-divider-top sticky bottom-0 z-40 bg-[linear-gradient(180deg,rgba(8,8,10,0.76),rgba(8,8,10,0.94))] backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-around gap-2 px-2 py-3">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
@@ -77,8 +77,8 @@ export default function AppShell({ children, hearts }: AppShellProps) {
                 href={item.href}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                   isActive
-                    ? "bg-rose-500 text-white"
-                    : "text-slate-600 hover:bg-rose-50 hover:text-rose-600"
+                    ? "bg-red-600 text-white shadow-[0_0_26px_rgba(220,38,38,0.28)]"
+                    : "text-zinc-400 hover:bg-white/5 hover:text-red-300"
                 }`}
               >
                 {item.label}

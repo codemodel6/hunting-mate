@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import type { ChatSummary as Chat } from "@/entities/chat";
@@ -23,7 +23,7 @@ export default function ChatsPage() {
   }, [isAuthenticated, router]);
 
   const chats: Chat[] = chatsQuery.data?.chats ?? [];
-  const hearts = profileQuery.data?.profile?.hearts ?? 0;
+  const trust = profileQuery.data?.profile?.hearts ?? 0;
   const loading =
     isAuthenticated === undefined || chatsQuery.isPending || profileQuery.isPending;
   const queryError = chatsQuery.error ?? profileQuery.error;
@@ -35,35 +35,35 @@ export default function ChatsPage() {
         : null;
 
   return (
-    <AppShell hearts={hearts}>
+    <AppShell trust={trust}>
       <section className="space-y-6">
-        <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-rose-100">
-          <p className="text-sm font-medium text-rose-500">채팅</p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-900">대화 목록</h1>
-          <p className="mt-2 text-slate-500">현재 매칭 상태와 함께 대화방으로 이동할 수 있습니다.</p>
+        <div className="surface-panel">
+          <p className="section-kicker">채팅</p>
+          <h1 className="section-title">대화 목록</h1>
+          <p className="section-copy">현재 매칭 상태와 함께 대화방으로 이동할 수 있습니다.</p>
         </div>
 
-        {error && <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>}
+        {error && <div className="alert-error">{error}</div>}
         {loading ? (
-          <div className="rounded-[2rem] bg-white p-8 text-sm text-slate-500 shadow-sm ring-1 ring-rose-100">채팅 목록을 불러오는 중입니다...</div>
+          <div className="surface-panel text-sm text-zinc-400">채팅 목록을 불러오는 중입니다...</div>
         ) : chats.length === 0 ? (
-          <div className="rounded-[2rem] bg-white p-8 text-sm text-slate-500 shadow-sm ring-1 ring-rose-100">아직 생성된 채팅방이 없습니다.</div>
+          <div className="surface-panel text-sm text-zinc-400">아직 생성된 채팅방이 없습니다.</div>
         ) : (
           <div className="grid gap-4">
             {chats.map((chat) => (
-              <button key={chat.chatId} type="button" onClick={() => router.push(`/chat/${chat.chatId}`)} className="flex items-center gap-4 rounded-[2rem] bg-white p-5 text-left shadow-sm ring-1 ring-rose-100 transition hover:-translate-y-0.5 hover:shadow-md">
-                <div className="h-16 w-16 overflow-hidden rounded-full bg-slate-100">
+              <button key={chat.chatId} type="button" onClick={() => router.push(`/chat/${chat.chatId}`)} className="surface-panel-compact surface-hover flex items-center gap-4 text-left">
+                <div className="h-16 w-16 overflow-hidden rounded-full bg-zinc-900">
                   {chat.otherUser.photos?.[0] ? (
                     <img src={chat.otherUser.photos[0]} alt={chat.otherUser.name} className="h-full w-full object-cover" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-slate-500">{chat.otherUser.name?.slice(0, 1) ?? "?"}</div>
+                    <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-zinc-400">{chat.otherUser.name?.slice(0, 1) ?? "?"}</div>
                   )}
                 </div>
                 <div className="flex-1">
-                  <p className="text-lg font-semibold text-slate-900">{chat.otherUser.name}</p>
-                  <p className="mt-1 text-sm text-slate-500">상태: {chat.matchStatus}</p>
+                  <p className="text-lg font-semibold text-white">{chat.otherUser.name}</p>
+                  <p className="mt-1 text-sm text-zinc-400">상태: {chat.matchStatus}</p>
                 </div>
-                <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-600">입장</span>
+                <span className="badge-accent">입장</span>
               </button>
             ))}
           </div>
