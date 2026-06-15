@@ -25,9 +25,9 @@ export default function RootPage() {
     <div className="app-frame flex min-h-screen items-center justify-center px-6 text-white">
       <div className="surface-panel w-full max-w-2xl p-10 text-center">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-red-600/80 text-2xl font-bold shadow-[0_0_32px_rgba(220,38,38,0.28)]">
-          HM
+          조각
         </div>
-        <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">Hunting Mate</h1>
+        <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">조각</h1>
         <p className="mt-4 text-base text-zinc-300 md:text-lg">
           Figma Make 산출물을 Next.js App Router 구조로 다시 연결하는 중입니다.
         </p>

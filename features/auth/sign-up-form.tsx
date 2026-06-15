@@ -42,7 +42,7 @@ export default function SignUpForm() {
     <>
       <div className="app-frame flex min-h-screen items-center justify-center p-4">
         <div className="surface-panel w-full max-w-xl">
-          <p className="section-kicker">Hunting Mate</p>
+          <p className="section-kicker">조각</p>
           <h1 className="section-title">회원가입</h1>
           <p className="section-copy">기본 프로필을 입력하고 바로 시작해 보세요.</p>
 

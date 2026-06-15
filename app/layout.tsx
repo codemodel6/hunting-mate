@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hunting Mate",
-  description: "Next.js App Router migration for the Figma Make prototype.",
+  title: "조각",
+  description: "조각 서비스 웹앱입니다.",
 };
 
 export default function RootLayout({

@@ -37,10 +37,10 @@ export default function AppShell({ children, trust }: AppShellProps) {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <Link href="/home" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-sm font-bold text-white shadow-[0_0_24px_rgba(220,38,38,0.32)]">
-              HM
+              조각
             </div>
             <div>
-              <p className="text-lg font-semibold text-white">Hunting Mate</p>
+              <p className="text-lg font-semibold text-white">조각</p>
               <p className="text-xs text-zinc-400">가벼운 만남부터 진지한 대화까지</p>
             </div>
           </Link>

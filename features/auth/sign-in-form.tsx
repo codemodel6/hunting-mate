@@ -28,7 +28,7 @@ export default function SignInForm() {
   return (
     <div className="app-frame flex min-h-screen items-center justify-center p-4">
       <div className="surface-panel w-full max-w-md">
-        <p className="section-kicker">Hunting Mate</p>
+        <p className="section-kicker">조각</p>
         <h1 className="section-title">로그인</h1>
         <p className="section-copy">계정으로 로그인하고 서비스를 계속 이용해 보세요.</p>
 
