@@ -113,6 +113,8 @@ const desktopStats = [
 const desktopNotices = [
   { title: "신뢰 포인트 적립 이벤트 안내", date: "11.29", isNew: true },
   { title: "안전한 만남을 위한 가이드 업데이트", date: "11.28" },
+  { title: "주말 실시간 매칭 운영 시간 안내", date: "11.27" },
+  { title: "실시간 카드 노출 기준 변경 안내", date: "11.26" },
   { title: "매칭 시스템 개선 사항 안내", date: "11.25" },
 ];
 
@@ -271,7 +273,7 @@ export default function HomePage() {
           <div className="grid h-[calc(100vh-88px)] gap-5 pt-5 2xl:grid-cols-[minmax(0,1.62fr)_440px]">
             <div className="flex min-h-0 flex-col gap-5">
               <section className="overflow-hidden rounded-[20px] border border-white/7 bg-[linear-gradient(135deg,rgba(14,23,43,0.98),rgba(10,14,30,0.96))] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
-                <div className="relative grid h-[320px] grid-cols-[1.02fr_0.98fr]">
+                <div className="relative grid h-[304px] grid-cols-[1.02fr_0.98fr]">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.1),transparent_38%),linear-gradient(90deg,rgba(5,9,21,0.82),rgba(5,9,21,0.18)_52%,rgba(5,9,21,0.46))]" />
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,#182132,#0c1226)]" />
                   <div className="absolute inset-0 opacity-60 [background:radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.16),transparent_6%),radial-gradient(circle_at_28%_36%,rgba(255,226,186,0.18),transparent_5%),radial-gradient(circle_at_42%_26%,rgba(199,225,255,0.15),transparent_4%),radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.16),transparent_4%),radial-gradient(circle_at_84%_44%,rgba(255,218,173,0.14),transparent_5%),radial-gradient(circle_at_66%_64%,rgba(255,255,255,0.12),transparent_4%),linear-gradient(135deg,#202a37,#0f1220_58%,#151b2b)]" />
@@ -279,24 +281,24 @@ export default function HomePage() {
                     <img alt="" src="" className="h-full w-full object-cover opacity-0" />
                   </div>
 
-                  <div className="relative z-10 flex flex-col justify-between px-10 py-8">
+                  <div className="relative z-10 flex flex-col justify-between px-10 py-7">
                     <div>
-                      <h2 className="max-w-[17rem] text-[2.55rem] font-semibold leading-[1.18] tracking-[-0.04em] text-white">
+                      <h2 className="max-w-[16rem] text-[2.35rem] font-semibold leading-[1.15] tracking-[-0.04em] text-white">
                         지금 이 사람과
                         <br />
                         매칭해보세요!
                       </h2>
-                      <p className="mt-4 text-[0.92rem] text-zinc-200">
+                      <p className="mt-3.5 text-[0.88rem] text-zinc-200">
                         26세 · 서울 · 영화, 여행 좋아해요
                       </p>
-                      <div className="mt-3 flex flex-wrap gap-3 text-[0.86rem] text-zinc-100">
+                      <div className="mt-2.5 flex flex-wrap gap-3 text-[0.82rem] text-zinc-100">
                         <span>#진솔한대화</span>
                         <span>#여행메이트</span>
                         <span>#취미공유</span>
                       </div>
                     </div>
 
-                    <div className="mt-6 flex max-w-[28rem] gap-4">
+                    <div className="mt-5 flex max-w-[28rem] gap-4">
                       <button
                         type="button"
                         onClick={nextDesktopCard}
@@ -469,12 +471,12 @@ export default function HomePage() {
                     <FiChevronRight />
                   </button>
                 </div>
-                <div className="mt-5 space-y-5">
+                <div className="mt-5 space-y-4">
                   {desktopNotices.map((notice) => (
                     <div key={notice.title} className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <span className="h-2 w-2 rounded-full bg-violet-400" />
-                        <p className="text-[0.95rem] text-zinc-200">{notice.title}</p>
+                        <p className="text-[0.92rem] text-zinc-200">{notice.title}</p>
                         {notice.isNew && (
                           <span className="rounded-md bg-[#8f522c] px-2 py-0.5 text-[0.72rem] font-semibold text-orange-100">
                             NEW
