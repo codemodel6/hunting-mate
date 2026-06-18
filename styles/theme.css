@@ -2,6 +2,13 @@
 
 :root {
   --font-size: 16px;
+  --home-brand-size: 2.4rem;
+  --home-section-title-size: 2.2rem;
+  --home-card-title-size: 2.55rem;
+  --home-point-size: 3.5rem;
+  --home-body-size: 1.05rem;
+  --home-meta-size: 1rem;
+  --home-tab-size: 0.95rem;
   --background: #090b1b;
   --foreground: #f7f7fb;
   --card: #101427;
@@ -39,6 +46,18 @@
   --sidebar-accent-foreground: #f5f5f5;
   --sidebar-border: rgba(255, 255, 255, 0.1);
   --sidebar-ring: rgba(139, 92, 246, 0.5);
+}
+
+@media (max-width: 1279px) {
+  :root {
+    --home-brand-size: 1.7rem;
+    --home-section-title-size: 1.35rem;
+    --home-card-title-size: 1.45rem;
+    --home-point-size: 2.15rem;
+    --home-body-size: 0.88rem;
+    --home-meta-size: 0.8rem;
+    --home-tab-size: 0.76rem;
+  }
 }
 
 .dark {
@@ -381,5 +400,44 @@
 
   .modal-copy {
     @apply mt-3 text-sm leading-6 text-zinc-400;
+  }
+
+  .home-brand-title {
+    font-size: var(--home-brand-size);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .home-section-title {
+    font-size: var(--home-section-title-size);
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+  }
+
+  .home-card-title {
+    font-size: var(--home-card-title-size);
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+  }
+
+  .home-point-value {
+    font-size: var(--home-point-size);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  .home-body-text {
+    font-size: var(--home-body-size);
+    line-height: 1.65;
+  }
+
+  .home-meta-text {
+    font-size: var(--home-meta-size);
+    line-height: 1.5;
+  }
+
+  .home-tab-text {
+    font-size: var(--home-tab-size);
+    line-height: 1.2;
   }
 }

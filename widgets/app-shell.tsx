@@ -50,7 +50,7 @@ export default function AppShell({ children, trust }: AppShellProps) {
               <FiHeart className="text-base" />
             </div>
             <div>
-              <p className="text-[1.35rem] font-semibold leading-none text-white">TrustMate</p>
+              <p className="text-[1.35rem] font-semibold leading-none text-white">조각</p>
               <p className="text-xs text-zinc-400">신뢰 기반 실시간 만남 앱</p>
             </div>
           </Link>

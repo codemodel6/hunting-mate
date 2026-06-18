@@ -119,12 +119,14 @@ const desktopNotices = [
 ];
 
 const mobileTabs = [
-  { label: "홈", icon: FiHome, active: true },
-  { label: "매칭", icon: FiHeart },
-  { label: "채팅", icon: FiMessageCircle },
-  { label: "포인트", icon: PiDiamondLight },
-  { label: "마이", icon: FiUser },
+  { label: "홈", icon: FiHome, active: true, href: "/home" },
+  { label: "매칭", icon: FiHeart, href: "/home" },
+  { label: "채팅", icon: FiMessageCircle, href: "/chats" },
+  { label: "포인트", icon: PiDiamondLight, href: "/profile" },
+  { label: "마이", icon: FiUser, href: "/profile" },
 ];
+
+const mobileCards = desktopCards.slice(0, 2);
 
 const desktopNav = [
   { label: "홈", icon: FiHome, active: true },
@@ -209,7 +211,7 @@ export default function HomePage() {
               <FiShield className="text-[1.1rem]" />
             </div>
             <div>
-              <p className="text-[1.15rem] font-semibold leading-none text-white">TrustMate</p>
+              <p className="text-[1.15rem] font-semibold leading-none text-white">조각</p>
             </div>
           </div>
 
@@ -418,7 +420,7 @@ export default function HomePage() {
                 </div>
               </section>
 
-              <p className="px-2 text-[0.85rem] text-zinc-500">© 2024 TrustMate. All rights reserved.</p>
+              <p className="px-2 text-[0.85rem] text-zinc-500">© 2024 조각. All rights reserved.</p>
             </div>
 
             <aside className="flex min-h-0 flex-col gap-5">
@@ -521,101 +523,92 @@ export default function HomePage() {
       </div>
 
       <div className="xl:hidden">
-        <header className="flex items-center justify-between px-8 pb-6 pt-12">
-          <h1 className="text-[2.4rem] font-semibold tracking-[-0.04em] text-white">TrustMate</h1>
+        <header className="flex items-center justify-between px-5 pb-4 pt-4">
+          <h1 className="home-brand-title font-semibold text-white">조각</h1>
           <div className="flex items-center gap-6">
             <div className="relative">
-              <FiBell className="text-[2rem] text-white" />
+              <FiBell className="text-[1.7rem] text-white" />
               <span className="absolute -right-1 top-0 h-3.5 w-3.5 rounded-full bg-[#8b5cf6]" />
             </div>
-            <FiMenu className="text-[2.2rem] text-white" />
+            <FiMenu className="text-[1.9rem] text-white" />
           </div>
         </header>
 
-        <main className="space-y-7 px-8 pb-36">
-          <section className="rounded-[28px] border border-white/7 bg-[linear-gradient(135deg,rgba(87,60,216,0.92),rgba(25,20,74,0.94))] px-8 py-9 shadow-[0_28px_60px_rgba(29,20,84,0.4)]">
-            <div className="flex items-center justify-between gap-5">
-              <div className="flex items-center gap-5">
-                <div className="flex h-18 w-18 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5660ff,#5b4eff)]">
-                  <FiShield className="text-[2.55rem] text-white" />
-                </div>
-                <div>
-                  <p className="text-[1rem] text-white/90">내 신뢰 포인트</p>
-                  <p className="mt-2 text-[3.5rem] font-semibold leading-none tracking-[-0.05em] text-white">
-                    {trust.toLocaleString()}P
-                  </p>
-                </div>
+        <main className="space-y-5 px-5 pb-32">
+          <section className="rounded-[22px] border border-white/7 bg-[linear-gradient(135deg,rgba(87,60,216,0.92),rgba(25,20,74,0.94))] px-5 py-4 shadow-[0_22px_42px_rgba(29,20,84,0.3)]">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5660ff,#5b4eff)]">
+                <FiShield className="text-[1.7rem] text-white" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="home-point-value font-semibold text-white">{trust.toLocaleString()}P</p>
+                <p className="home-meta-text mt-1 text-white/88">신뢰는 더 좋은 만남을 만듭니다.</p>
               </div>
               <button
                 type="button"
-                className="hidden rounded-full bg-[rgba(255,255,255,0.12)] px-7 py-5 text-[1.05rem] font-medium text-white sm:block"
+                className="shrink-0 rounded-full bg-[rgba(255,255,255,0.12)] px-4 py-2.5 text-[0.78rem] font-medium text-white"
               >
                 포인트 내역
               </button>
             </div>
-            <button
-              type="button"
-              className="mt-6 rounded-full bg-[rgba(255,255,255,0.12)] px-6 py-3 text-[1rem] font-medium text-white sm:hidden"
-            >
-              포인트 내역
-            </button>
-            <p className="mt-6 text-[1.05rem] text-white/88">신뢰는 더 좋은 만남을 만듭니다.</p>
           </section>
 
           <section>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <h2 className="text-[2.2rem] font-semibold tracking-[-0.04em] text-white">실시간 매칭</h2>
-                <div className="flex items-center gap-2 text-[1rem] text-zinc-300">
-                  <span className="h-3 w-3 rounded-full bg-emerald-400" />
+              <div className="flex items-center gap-3">
+                <h2 className="home-section-title font-semibold text-white">실시간 매칭</h2>
+                <div className="home-meta-text flex items-center gap-2 text-zinc-300">
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
                   현재 접속 중 128명
                 </div>
               </div>
-              <button type="button" className="flex items-center gap-2 text-[1rem] text-zinc-300">
+              <button type="button" className="home-meta-text flex items-center gap-2 text-zinc-300">
                 더보기
                 <FiChevronRight className="text-[1.2rem]" />
               </button>
             </div>
 
-            <div className="mt-6 overflow-hidden rounded-[28px] border border-white/7 bg-[linear-gradient(180deg,rgba(11,15,31,0.98),rgba(9,12,25,0.98))] p-6 shadow-[0_24px_56px_rgba(0,0,0,0.3)]">
-              <div className="relative min-h-[540px] overflow-hidden rounded-[24px]">
-                <div className="absolute inset-0 [background:radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.14),transparent_6%),radial-gradient(circle_at_33%_18%,rgba(255,224,185,0.16),transparent_5%),radial-gradient(circle_at_53%_25%,rgba(182,228,255,0.16),transparent_4%),radial-gradient(circle_at_80%_14%,rgba(255,255,255,0.14),transparent_4%),radial-gradient(circle_at_72%_54%,rgba(255,227,205,0.15),transparent_5%),linear-gradient(135deg,#384034,#151a1f_38%,#0b1020_68%,#182030)]" />
+            <div className="mt-4 overflow-hidden rounded-[22px] border border-white/7 bg-[linear-gradient(180deg,rgba(11,15,31,0.98),rgba(9,12,25,0.98))] shadow-[0_18px_36px_rgba(0,0,0,0.26)]">
+              <div className="relative min-h-[212px] overflow-hidden rounded-[22px]">
+                <div className="absolute inset-0 [background:radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.14),transparent_6%),radial-gradient(circle_at_33%_18%,rgba(255,224,185,0.16),transparent_5%),radial-gradient(circle_at_53%_25%,rgba(182,228,255,0.16),transparent_4%),radial-gradient(circle_at_80%_14%,rgba(255,255,255,0.14),transparent_4%),radial-gradient(circle_at_72%_54%,rgba(255,227,205,0.15),transparent_5%),linear-gradient(135deg,#444a3b,#1b1f22_38%,#0b1020_68%,#1b2234)]" />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,17,0.04),rgba(7,9,17,0.76))]" />
                 <div className="absolute inset-0">
-                  <img alt="" src="" className="h-full w-full object-cover opacity-0" />
+                  <img alt="" src="" className="h-full w-full scale-105 object-cover opacity-0" />
                 </div>
-                <div className="absolute right-7 top-7 rounded-full bg-[#23c96c] px-4 py-2 text-[1.05rem] font-semibold text-white">
+                <div className="absolute right-4 top-4 rounded-full bg-[#23c96c] px-3 py-1 text-[0.72rem] font-semibold text-white">
                   ONLINE
                 </div>
 
-                <div className="relative z-10 flex h-full flex-col justify-end p-10">
-                  <h3 className="text-[2.55rem] font-semibold leading-tight tracking-[-0.04em] text-white">
-                    {mobileFeature.name}
-                  </h3>
-                  <p className="mt-5 text-[1.05rem] text-zinc-100">
-                    {mobileFeature.age} · {mobileFeature.location} · {mobileFeature.summary}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-3 text-[1rem] text-zinc-100">
-                    {mobileFeature.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
+                <div className="relative z-10 flex h-full flex-col justify-between px-4 pb-4 pt-5">
+                  <div>
+                    <h3 className="home-card-title font-semibold text-white">
+                      {mobileFeature.name}
+                    </h3>
+                    <p className="home-body-text mt-3 text-zinc-100">
+                      {mobileFeature.age} · {mobileFeature.location} · {mobileFeature.summary}
+                    </p>
+                    <div className="home-meta-text mt-3 flex flex-wrap gap-2 text-zinc-100">
+                      {mobileFeature.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="mt-10 grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-2.5 pt-4">
                     <button
                       type="button"
-                      className="flex h-[72px] items-center justify-center gap-3 rounded-[20px] border border-[#31395c] bg-[rgba(10,15,30,0.56)] text-[1.05rem] font-medium text-zinc-100"
+                      className="flex h-[42px] items-center justify-center gap-2 rounded-[14px] border border-[#31395c] bg-[rgba(10,15,30,0.62)] text-[0.78rem] font-medium text-zinc-100"
                     >
-                      <FiX className="text-[1.65rem]" />
+                      <FiX className="text-[1rem]" />
                       다음 사람
                     </button>
                     <button
                       type="button"
                       onClick={() => void handleRequestChat()}
                       disabled={requestChatMutation.isPending || loading}
-                      className="flex h-[72px] items-center justify-center gap-3 rounded-[20px] bg-[linear-gradient(135deg,#6f56ff,#7a53f5)] text-[1.05rem] font-semibold text-white shadow-[0_18px_36px_rgba(93,61,221,0.35)] disabled:cursor-not-allowed disabled:opacity-70"
+                      className="flex h-[42px] items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(135deg,#6f56ff,#7a53f5)] text-[0.78rem] font-semibold text-white shadow-[0_16px_28px_rgba(93,61,221,0.32)] disabled:cursor-not-allowed disabled:opacity-70"
                     >
-                      <FiHeart className="fill-current text-[1.35rem]" />
+                      <FiHeart className="fill-current text-[0.92rem]" />
                       매칭하기
                     </button>
                   </div>
@@ -624,37 +617,71 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="rounded-[24px] border border-white/7 bg-[linear-gradient(180deg,rgba(15,19,36,0.98),rgba(10,13,25,0.98))] px-8 py-7">
-            <div className="flex items-center gap-4 text-[1.1rem] text-white">
+          <section className="rounded-[22px] border border-white/7 bg-[linear-gradient(180deg,rgba(15,19,36,0.98),rgba(10,13,25,0.98))] px-5 py-4">
+            <div className="home-body-text flex items-center gap-4 text-white">
               <span>오늘 남은 매칭 기회</span>
               <span className="font-semibold">3/5</span>
             </div>
-            <div className="mt-4 h-3 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/10">
               <div className="h-full w-[64%] rounded-full bg-[linear-gradient(90deg,#7d55ff,#8156f4,#5940d8)]" />
             </div>
           </section>
 
           <section>
-            <h2 className="text-[2rem] font-semibold tracking-[-0.04em] text-white">신뢰 시스템</h2>
-            <div className="mt-5 rounded-[24px] border border-white/7 bg-[linear-gradient(180deg,rgba(15,19,36,0.98),rgba(10,13,25,0.98))] px-4 py-6">
+            <div className="flex items-center justify-between">
+              <h2 className="home-section-title font-semibold text-white">실시간 매칭 카드</h2>
+              <button type="button" className="home-meta-text flex items-center gap-2 text-zinc-300">
+                더보기
+                <FiChevronRight className="text-[1rem]" />
+              </button>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {mobileCards.map((card) => (
+                <article
+                  key={card.id}
+                  className="rounded-[18px] border border-white/7 bg-[linear-gradient(180deg,rgba(18,25,49,0.95),rgba(12,17,34,0.94))] px-3 py-3.5 text-center shadow-[0_16px_32px_rgba(0,0,0,0.24)]"
+                >
+                  <div className="mx-auto h-14 w-14 overflow-hidden rounded-full border border-white/10 bg-[linear-gradient(135deg,#3d4a6d,#182033)]">
+                    <img alt="" src="" className="h-full w-full object-cover opacity-0" />
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="flex items-center justify-center gap-1.5">
+                      <p className="text-[0.84rem] font-medium text-white">{card.name}</p>
+                      {card.online && <span className="h-2 w-2 rounded-full bg-emerald-400" />}
+                    </div>
+                    <p className="mt-1.5 text-[0.74rem] text-zinc-300">
+                      {card.age} · {card.location}
+                    </p>
+                  </div>
+                  <div className="mt-2.5 inline-flex rounded-full bg-[linear-gradient(135deg,#5f47ee,#4933c7)] px-3 py-1.5 text-[0.68rem] font-medium text-white">
+                    ONLINE
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="home-section-title font-semibold text-white">신뢰 시스템</h2>
+            <div className="mt-4 rounded-[22px] border border-white/7 bg-[linear-gradient(180deg,rgba(15,19,36,0.98),rgba(10,13,25,0.98))] px-3 py-5">
               <div className="grid grid-cols-3 divide-x divide-white/8">
                 {systemItems.map((item) => {
                   const Icon = item.icon;
 
                   return (
                     <div key={item.title} className="px-3 text-center">
-                      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[rgba(90,82,160,0.18)]">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[rgba(90,82,160,0.18)]">
                         <Icon
                           className={cx(
-                            "text-[1.9rem]",
+                            "text-[1.35rem]",
                             item.title === "상호 평가 문화" && "text-amber-400",
                             item.title === "신뢰 포인트" && "text-sky-400",
                             item.title === "신원 인증 완료" && "text-zinc-100",
                           )}
                         />
                       </div>
-                      <p className="mt-5 text-[1rem] font-medium text-white">{item.title}</p>
-                      <p className="mt-2 text-[0.95rem] leading-6 text-zinc-400">{item.description}</p>
+                      <p className="home-meta-text mt-3 font-medium text-white">{item.title}</p>
+                      <p className="home-meta-text mt-1.5 text-zinc-400">{item.description}</p>
                     </div>
                   );
                 })}
@@ -662,36 +689,39 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="rounded-[24px] border border-white/7 bg-[linear-gradient(135deg,rgba(68,40,156,0.84),rgba(35,22,80,0.88))] px-8 py-8">
+          <section className="rounded-[22px] border border-white/7 bg-[linear-gradient(135deg,rgba(68,40,156,0.84),rgba(35,22,80,0.88))] px-5 py-5">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <h2 className="text-[1.95rem] font-semibold text-white">오늘의 한마디</h2>
-                <p className="mt-5 text-[1.05rem] text-white/92">“진짜 만남은 신뢰에서 시작됩니다.”</p>
+                <h2 className="home-section-title font-semibold text-white">오늘의 한마디</h2>
+                <p className="home-body-text mt-3 text-white/92">“진짜 만남은 신뢰에서 시작됩니다.”</p>
               </div>
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[rgba(122,72,255,0.26)] text-white/90">
-                <FiMoreHorizontal className="text-[2rem]" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[rgba(122,72,255,0.26)] text-white/90">
+                <FiMoreHorizontal className="text-[1.5rem]" />
               </div>
             </div>
           </section>
         </main>
 
-        <nav className="fixed bottom-0 left-0 right-0 border-t border-white/8 bg-[linear-gradient(180deg,rgba(9,13,29,0.94),rgba(7,10,22,0.98))] px-6 py-4 backdrop-blur-xl">
+        <nav className="fixed bottom-0 left-0 right-0 z-[90] border-t border-white/8 bg-[linear-gradient(180deg,rgba(9,13,29,0.98),rgba(7,10,22,1))] px-3 py-1.5 backdrop-blur-xl pointer-events-auto">
           <div className="grid grid-cols-5 gap-2">
             {mobileTabs.map((tab) => {
               const Icon = tab.icon;
-
-              return (
-                <button
-                  key={tab.label}
-                  type="button"
+              const content = (
+                <div
                   className={cx(
-                    "flex flex-col items-center justify-center gap-2 rounded-[18px] py-3 text-[0.95rem] font-medium",
+                    "flex flex-col items-center justify-center gap-1 rounded-[16px] py-1 font-medium pointer-events-auto",
                     tab.active ? "text-[#8a5dff]" : "text-zinc-400",
                   )}
                 >
-                  <Icon className={cx("text-[1.9rem]", tab.active && "fill-current")} />
-                  <span>{tab.label}</span>
-                </button>
+                  <Icon className={cx("text-[1.18rem]", tab.active && "fill-current")} />
+                  <span className="home-tab-text">{tab.label}</span>
+                </div>
+              );
+
+              return (
+                <Link key={tab.label} href={tab.href} className="block">
+                  {content}
+                </Link>
               );
             })}
           </div>
