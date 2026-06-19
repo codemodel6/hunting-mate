@@ -9,6 +9,14 @@
   --home-body-size: 1.05rem;
   --home-meta-size: 1rem;
   --home-tab-size: 0.95rem;
+  --chat-brand-size: 1.9rem;
+  --chat-page-title-size: 2rem;
+  --chat-panel-title-size: 1.75rem;
+  --chat-name-lg-size: 1.6rem;
+  --chat-name-md-size: 1.18rem;
+  --chat-body-size: 0.96rem;
+  --chat-meta-size: 0.88rem;
+  --chat-pill-size: 0.78rem;
   --background: #090b1b;
   --foreground: #f7f7fb;
   --card: #101427;
@@ -57,6 +65,14 @@
     --home-body-size: 0.88rem;
     --home-meta-size: 0.8rem;
     --home-tab-size: 0.76rem;
+    --chat-brand-size: 1.45rem;
+    --chat-page-title-size: 1.6rem;
+    --chat-panel-title-size: 1.25rem;
+    --chat-name-lg-size: 1.12rem;
+    --chat-name-md-size: 1rem;
+    --chat-body-size: 0.84rem;
+    --chat-meta-size: 0.76rem;
+    --chat-pill-size: 0.66rem;
   }
 }
 
@@ -400,6 +416,108 @@
 
   .modal-copy {
     @apply mt-3 text-sm leading-6 text-zinc-400;
+  }
+
+  .chat-page-bg {
+    @apply min-h-screen text-white;
+    background-image:
+      radial-gradient(circle at top left, rgba(85, 63, 201, 0.2), transparent 22rem),
+      radial-gradient(circle at top right, rgba(39, 58, 135, 0.12), transparent 18rem),
+      linear-gradient(180deg, #050917, #040814);
+  }
+
+  .chat-panel {
+    @apply rounded-[1.5rem] border border-white/7;
+    background: linear-gradient(180deg, rgba(11, 15, 31, 0.98), rgba(8, 12, 25, 0.96));
+    box-shadow:
+      0 22px 46px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .chat-panel-soft {
+    @apply rounded-[1.25rem] border border-white/6;
+    background: linear-gradient(180deg, rgba(18, 24, 45, 0.96), rgba(12, 16, 31, 0.94));
+  }
+
+  .chat-tab {
+    @apply border-b-2 border-transparent px-4 py-3 font-medium text-zinc-400 transition;
+    font-size: var(--chat-meta-size);
+  }
+
+  .chat-tab-active {
+    @apply border-violet-500 text-white;
+  }
+
+  .chat-list-item {
+    @apply rounded-[1.2rem] border border-transparent px-4 py-4 text-left transition;
+  }
+
+  .chat-list-item-active {
+    background: linear-gradient(135deg, rgba(72, 50, 165, 0.78), rgba(29, 25, 68, 0.82));
+    border-color: rgba(139, 92, 246, 0.18);
+    box-shadow: 0 16px 28px rgba(38, 25, 104, 0.22);
+  }
+
+  .chat-pill {
+    @apply rounded-full border border-white/8 px-3 py-1 font-medium text-zinc-300;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: var(--chat-pill-size);
+  }
+
+  .chat-bubble-other {
+    @apply rounded-[1.35rem] bg-[rgba(24,29,49,0.96)] px-4 py-3 leading-7 text-zinc-100 shadow-[0_10px_24px_rgba(0,0,0,0.18)];
+    font-size: var(--chat-body-size);
+  }
+
+  .chat-bubble-mine {
+    @apply rounded-[1.35rem] px-4 py-3 leading-7 text-white shadow-[0_14px_30px_rgba(79,59,196,0.28)];
+    background: linear-gradient(135deg, rgba(93, 68, 234, 0.98), rgba(114, 76, 240, 0.96));
+    font-size: var(--chat-body-size);
+  }
+
+  .chat-input-shell {
+    @apply rounded-[1.1rem] border border-white/7;
+    background: linear-gradient(180deg, rgba(16, 20, 38, 0.98), rgba(11, 15, 28, 0.96));
+  }
+
+  .chat-brand-title {
+    font-size: var(--chat-brand-size);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .chat-page-title {
+    font-size: var(--chat-page-title-size);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .chat-panel-title {
+    font-size: var(--chat-panel-title-size);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  .chat-name-lg {
+    font-size: var(--chat-name-lg-size);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  .chat-name-md {
+    font-size: var(--chat-name-md-size);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .chat-body-text {
+    font-size: var(--chat-body-size);
+    line-height: 1.65;
+  }
+
+  .chat-meta-text {
+    font-size: var(--chat-meta-size);
+    line-height: 1.5;
   }
 
   .home-brand-title {
