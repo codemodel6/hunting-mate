@@ -62,7 +62,7 @@ type ChatUiMeta = {
 
 const desktopNav = [
   { label: "홈", icon: FiHome, href: "/home" },
-  { label: "매칭", icon: FiHeart, href: "/home" },
+  { label: "매칭", icon: FiHeart, href: "/matching" },
   { label: "채팅", icon: FiMessageCircle, href: "/chats", active: true },
   { label: "포인트", icon: PiDiamondLight, href: "/profile" },
   { label: "내 정보", icon: FiUser, href: "/profile" },
@@ -71,7 +71,7 @@ const desktopNav = [
 
 const mobileTabs = [
   { label: "홈", icon: FiHome, href: "/home" },
-  { label: "매칭", icon: FiHeart, href: "/home" },
+  { label: "매칭", icon: FiHeart, href: "/matching" },
   { label: "채팅", icon: FiMessageCircle, href: "/chats", active: true },
   { label: "포인트", icon: PiDiamondLight, href: "/profile" },
   { label: "마이", icon: FiUser, href: "/profile" },

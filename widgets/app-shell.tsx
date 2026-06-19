@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   FiBell,
-  FiEdit3,
   FiHeart,
   FiHome,
   FiLogOut,
@@ -23,7 +22,7 @@ type AppShellProps = {
 
 const navItems = [
   { href: "/home", label: "홈", icon: FiHome },
-  { href: "/create-post", label: "글쓰기", icon: FiEdit3 },
+  { href: "/matching", label: "매칭", icon: FiHeart },
   { href: "/chats", label: "채팅", icon: FiMessageCircle },
   { href: "/profile", label: "마이", icon: FiUser },
 ];

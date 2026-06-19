@@ -120,7 +120,7 @@ const desktopNotices = [
 
 const mobileTabs = [
   { label: "홈", icon: FiHome, active: true, href: "/home" },
-  { label: "매칭", icon: FiHeart, href: "/home" },
+  { label: "매칭", icon: FiHeart, href: "/matching" },
   { label: "채팅", icon: FiMessageCircle, href: "/chats" },
   { label: "포인트", icon: PiDiamondLight, href: "/profile" },
   { label: "마이", icon: FiUser, href: "/profile" },
@@ -130,7 +130,7 @@ const mobileCards = desktopCards.slice(0, 2);
 
 const desktopNav = [
   { label: "홈", icon: FiHome, active: true },
-  { label: "매칭", icon: FiHeart },
+  { label: "매칭", icon: FiHeart, href: "/matching" },
   { label: "채팅", icon: FiMessageCircle, href: "/chats" },
   { label: "포인트", icon: PiDiamondLight },
   { label: "내 정보", icon: FiUser, href: "/profile" },
@@ -264,6 +264,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-3">
                 <div className="h-11 w-11 overflow-hidden rounded-full border border-white/10 bg-[linear-gradient(135deg,#3c2e7f,#171c35)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img alt="" src="" className="h-full w-full object-cover opacity-0" />
                 </div>
                 <span className="text-[1.25rem] font-medium text-white">{profileName}</span>
@@ -280,6 +281,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,#182132,#0c1226)]" />
                   <div className="absolute inset-0 opacity-60 [background:radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.16),transparent_6%),radial-gradient(circle_at_28%_36%,rgba(255,226,186,0.18),transparent_5%),radial-gradient(circle_at_42%_26%,rgba(199,225,255,0.15),transparent_4%),radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.16),transparent_4%),radial-gradient(circle_at_84%_44%,rgba(255,218,173,0.14),transparent_5%),radial-gradient(circle_at_66%_64%,rgba(255,255,255,0.12),transparent_4%),linear-gradient(135deg,#202a37,#0f1220_58%,#151b2b)]" />
                   <div className="absolute bottom-0 right-0 top-0 w-[44%]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img alt="" src="" className="h-full w-full object-cover opacity-0" />
                   </div>
 
@@ -367,6 +369,7 @@ export default function HomePage() {
                         className="rounded-[18px] border border-white/6 bg-[linear-gradient(180deg,rgba(18,25,49,0.95),rgba(12,17,34,0.94))] px-4 py-4 text-center"
                       >
                         <div className="mx-auto h-20 w-20 overflow-hidden rounded-full border border-white/10 bg-[linear-gradient(135deg,#3d4a6d,#182033)]">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img alt="" src="" className="h-full w-full object-cover opacity-0" />
                         </div>
                         <div className="mt-4">
@@ -573,6 +576,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 [background:radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.14),transparent_6%),radial-gradient(circle_at_33%_18%,rgba(255,224,185,0.16),transparent_5%),radial-gradient(circle_at_53%_25%,rgba(182,228,255,0.16),transparent_4%),radial-gradient(circle_at_80%_14%,rgba(255,255,255,0.14),transparent_4%),radial-gradient(circle_at_72%_54%,rgba(255,227,205,0.15),transparent_5%),linear-gradient(135deg,#444a3b,#1b1f22_38%,#0b1020_68%,#1b2234)]" />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,17,0.04),rgba(7,9,17,0.76))]" />
                 <div className="absolute inset-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img alt="" src="" className="h-full w-full scale-105 object-cover opacity-0" />
                 </div>
                 <div className="absolute right-4 top-4 rounded-full bg-[#23c96c] px-3 py-1 text-[0.72rem] font-semibold text-white">
@@ -642,6 +646,7 @@ export default function HomePage() {
                   className="rounded-[18px] border border-white/7 bg-[linear-gradient(180deg,rgba(18,25,49,0.95),rgba(12,17,34,0.94))] px-3 py-3.5 text-center shadow-[0_16px_32px_rgba(0,0,0,0.24)]"
                 >
                   <div className="mx-auto h-14 w-14 overflow-hidden rounded-full border border-white/10 bg-[linear-gradient(135deg,#3d4a6d,#182033)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img alt="" src="" className="h-full w-full object-cover opacity-0" />
                   </div>
                   <div className="mt-2.5">

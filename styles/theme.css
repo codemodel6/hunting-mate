@@ -17,6 +17,12 @@
   --chat-body-size: 0.96rem;
   --chat-meta-size: 0.88rem;
   --chat-pill-size: 0.78rem;
+  --match-page-title-size: 2rem;
+  --match-card-title-size: 1.45rem;
+  --match-copy-size: 1rem;
+  --match-body-size: 0.96rem;
+  --match-meta-size: 0.84rem;
+  --match-pill-size: 0.8rem;
   --background: #090b1b;
   --foreground: #f7f7fb;
   --card: #101427;
@@ -73,6 +79,12 @@
     --chat-body-size: 0.84rem;
     --chat-meta-size: 0.76rem;
     --chat-pill-size: 0.66rem;
+    --match-page-title-size: 1.6rem;
+    --match-card-title-size: 1.15rem;
+    --match-copy-size: 0.88rem;
+    --match-body-size: 0.84rem;
+    --match-meta-size: 0.74rem;
+    --match-pill-size: 0.68rem;
   }
 }
 
@@ -518,6 +530,105 @@
   .chat-meta-text {
     font-size: var(--chat-meta-size);
     line-height: 1.5;
+  }
+
+  .match-page-bg {
+    @apply min-h-screen text-white;
+    background-image:
+      radial-gradient(circle at top left, rgba(72, 54, 184, 0.22), transparent 22rem),
+      radial-gradient(circle at top right, rgba(28, 42, 112, 0.14), transparent 18rem),
+      linear-gradient(180deg, #050917, #040814);
+  }
+
+  .match-panel {
+    @apply rounded-[1.35rem] border border-white/7;
+    background: linear-gradient(180deg, rgba(10, 15, 31, 0.98), rgba(8, 12, 25, 0.96));
+    box-shadow:
+      0 22px 46px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .match-soft-panel {
+    @apply rounded-[1.35rem] border border-white/7;
+    background: linear-gradient(180deg, rgba(18, 24, 47, 0.98), rgba(11, 16, 30, 0.96));
+  }
+
+  .match-search-shell {
+    @apply rounded-[0.95rem] border border-white/7;
+    background: linear-gradient(180deg, rgba(12, 18, 35, 0.98), rgba(9, 14, 27, 0.96));
+  }
+
+  .match-filter-box {
+    @apply rounded-[0.95rem] border border-white/8 bg-[rgba(10,15,30,0.92)] px-4 py-3 text-left;
+  }
+
+  .match-filter-label {
+    font-size: var(--match-meta-size);
+    line-height: 1.2;
+    color: rgb(161 161 170);
+  }
+
+  .match-tab {
+    @apply border-b-2 border-transparent pb-3 text-zinc-400 transition;
+    font-size: var(--match-body-size);
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  .match-tab-active {
+    @apply border-violet-500 text-white;
+  }
+
+  .match-page-title {
+    font-size: var(--match-page-title-size);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+  }
+
+  .match-card-title {
+    font-size: var(--match-card-title-size);
+    line-height: 1.22;
+    letter-spacing: -0.03em;
+  }
+
+  .match-copy-text {
+    font-size: var(--match-copy-size);
+    line-height: 1.65;
+  }
+
+  .match-body-text {
+    font-size: var(--match-body-size);
+    line-height: 1.55;
+  }
+
+  .match-meta-text {
+    font-size: var(--match-meta-size);
+    line-height: 1.5;
+  }
+
+  .match-pill {
+    @apply rounded-full border border-white/7 px-3 py-1 font-medium text-zinc-200;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: var(--match-pill-size);
+    line-height: 1.2;
+  }
+
+  .match-activation-mobile {
+    background:
+      radial-gradient(circle at 20% 18%, rgba(170, 145, 255, 0.42), transparent 18%),
+      linear-gradient(135deg, rgba(109, 91, 255, 0.96), rgba(68, 53, 181, 0.92));
+    box-shadow:
+      0 0 26px rgba(116, 88, 255, 0.34),
+      0 18px 34px rgba(47, 30, 124, 0.28);
+  }
+
+  .match-activation-bar {
+    background:
+      radial-gradient(circle at 18% 18%, rgba(170, 145, 255, 0.22), transparent 16%),
+      linear-gradient(135deg, rgba(108, 88, 255, 0.96), rgba(54, 39, 148, 0.92));
+    box-shadow:
+      0 18px 34px rgba(47, 30, 124, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .home-brand-title {
