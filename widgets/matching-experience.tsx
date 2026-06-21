@@ -464,8 +464,8 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
 
   return (
     <div className="match-page-bg">
-      <div className="mx-auto hidden h-screen max-w-[1920px] grid-cols-[212px_minmax(0,1fr)] overflow-hidden xl:grid">
-        <aside className="flex h-screen flex-col border-r border-white/7 bg-[linear-gradient(180deg,rgba(9,13,31,0.98),rgba(7,10,24,0.98))] px-4 py-6">
+      <div className="mx-auto hidden h-screen max-w-[1920px] grid-cols-[208px_minmax(0,1fr)] overflow-hidden xl:grid">
+        <aside className="flex h-screen flex-col border-r border-white/7 bg-[linear-gradient(180deg,rgba(9,13,31,0.98),rgba(7,10,24,0.98))] px-4 py-4">
           <div className="flex items-center gap-3 px-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,#6d4dff,#4f46e5)] text-white shadow-[0_10px_26px_rgba(95,66,255,0.32)]">
               <FiShield className="text-[1.1rem]" />
@@ -473,7 +473,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
             <p className="chat-brand-title font-semibold leading-none text-white">조각</p>
           </div>
 
-          <nav className="mt-8 space-y-2">
+          <nav className="mt-6 space-y-1.5">
             {desktopNav.map((item) => {
               const Icon = item.icon;
 
@@ -481,7 +481,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 <Link key={item.label} href={item.href} className="block">
                   <div
                     className={cx(
-                      "relative flex items-center gap-4 rounded-[16px] px-4 py-3 text-[1rem] font-medium transition",
+                      "relative flex items-center gap-4 rounded-[16px] px-4 py-2.5 text-[0.95rem] font-medium transition",
                       item.active
                         ? "bg-[linear-gradient(135deg,rgba(110,76,255,0.92),rgba(76,57,183,0.84))] text-white shadow-[0_16px_28px_rgba(66,41,160,0.28)]"
                         : "text-zinc-300 hover:bg-white/4 hover:text-white",
@@ -500,15 +500,15 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
             })}
           </nav>
 
-          <div className="mt-auto space-y-5">
-            <section className="match-soft-panel px-5 py-5">
+          <div className="mt-auto space-y-4">
+            <section className="match-soft-panel px-5 py-4">
               <p className="match-meta-text text-zinc-300">내 신뢰 포인트</p>
               <div className="mt-4 flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5f50ff,#5640f0)]">
                   <FiShield className="text-[1.4rem] text-white" />
                 </div>
                 <div>
-                  <p className="text-[2rem] font-semibold leading-none tracking-[-0.05em] text-white">
+                  <p className="text-[1.75rem] font-semibold leading-none tracking-[-0.05em] text-white">
                     {trust.toLocaleString()}P
                   </p>
                   <p className="match-meta-text mt-2 text-zinc-300">
@@ -518,7 +518,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
               </div>
               <button
                 type="button"
-                className="mt-5 w-full rounded-[14px] bg-[rgba(255,255,255,0.08)] px-4 py-3 text-sm font-medium text-white"
+                className="mt-4 w-full rounded-[14px] bg-[rgba(255,255,255,0.08)] px-4 py-2.5 text-[0.9rem] font-medium text-white"
               >
                 포인트 내역
               </button>
@@ -537,31 +537,31 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
           </div>
         </aside>
 
-        <div className="h-screen overflow-hidden px-5 py-4">
-          <header className="flex items-center justify-between border-b border-white/6 px-2 pb-4">
+        <div className="h-screen overflow-hidden px-4 py-3">
+          <header className="flex items-center justify-between border-b border-white/6 px-2 pb-3">
             <div>
               <h1 className="match-page-title font-semibold text-white">매칭</h1>
-              <p className="match-copy-text mt-3 text-zinc-300">
+              <p className="match-copy-text mt-2 text-zinc-300">
                 당신과 잘 맞는 사람들의 만남 글을 확인하고, 대화를 요청해보세요.
               </p>
             </div>
 
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-4">
               <button
                 type="button"
                 onClick={handleMatchingActivation}
-                className="flex items-center gap-4 rounded-[16px] border border-white/7 bg-[rgba(16,22,42,0.9)] px-5 py-3"
+                className="flex items-center gap-3 rounded-[16px] border border-white/7 bg-[rgba(16,22,42,0.9)] px-4 py-2.5"
               >
                 <span className="text-[1rem] font-medium text-white">매칭 활성화</span>
                 <span
                   className={cx(
-                    "relative flex h-8 w-12 items-center rounded-full px-1 transition",
+                    "relative flex h-7 w-11 items-center rounded-full px-1 transition",
                     matchingEnabled ? "bg-[#6f56ff]" : "bg-white/12",
                   )}
                 >
                   <span
                     className={cx(
-                      "flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#6f56ff] transition",
+                      "flex h-5 w-5 items-center justify-center rounded-full bg-white text-[#6f56ff] transition",
                       matchingEnabled ? "translate-x-4" : "translate-x-0",
                     )}
                   >
@@ -585,11 +585,11 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
             </div>
           </header>
 
-          <div className="grid h-[calc(100vh-92px)] grid-cols-[minmax(0,1.64fr)_300px] gap-4 pt-4">
-            <div className="flex min-h-0 flex-col gap-4">
-              <section className="match-panel px-4 py-4">
-                <div className="flex items-center justify-between gap-4 border-b border-white/7 px-2 pb-4">
-                  <div className="flex items-center gap-6">
+          <div className="grid h-[calc(100vh-84px)] grid-cols-[minmax(0,1.68fr)_276px] gap-3 pt-3">
+            <div className="flex min-h-0 flex-col gap-3">
+              <section className="match-panel px-4 py-3">
+                <div className="flex items-center justify-between gap-4 border-b border-white/7 px-1 pb-3">
+                  <div className="flex items-center gap-4">
                     {matchTabs.map((tab) => (
                       <button
                         key={tab.key}
@@ -610,26 +610,26 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                     ))}
                   </div>
 
-                  <div className="match-search-shell flex h-11 items-center gap-3 px-4 text-zinc-400">
+                  <div className="match-search-shell flex h-10 items-center gap-3 px-3 text-zinc-400">
                     <FiSearch />
                     <input
                       value={search}
                       onChange={(event) => setSearch(event.target.value)}
                       placeholder="검색어를 입력하세요..."
-                      className="w-52 bg-transparent text-sm text-white placeholder:text-zinc-500 focus:outline-none"
+                      className="w-44 bg-transparent text-[0.88rem] text-white placeholder:text-zinc-500 focus:outline-none"
                     />
                     <FiSearch className="text-lg" />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[repeat(5,minmax(0,1fr))_110px_140px] gap-3 px-2 pt-4">
+                <div className="grid grid-cols-[repeat(5,minmax(0,1fr))_96px_118px] gap-2.5 px-1 pt-3">
                   <label className="match-filter-box">
                     <span className="match-filter-label">성별</span>
                     <div className="mt-2 flex items-center justify-between">
                       <select
                         value={genderFilter}
                         onChange={(event) => setGenderFilter(event.target.value)}
-                        className="w-full appearance-none bg-transparent text-[0.96rem] font-medium text-white focus:outline-none"
+                        className="w-full appearance-none bg-transparent text-[0.88rem] font-medium text-white focus:outline-none"
                       >
                         <option>전체</option>
                         <option>여성</option>
@@ -645,7 +645,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                       <select
                         value={regionFilter}
                         onChange={(event) => setRegionFilter(event.target.value)}
-                        className="w-full appearance-none bg-transparent text-[0.96rem] font-medium text-white focus:outline-none"
+                        className="w-full appearance-none bg-transparent text-[0.88rem] font-medium text-white focus:outline-none"
                       >
                         <option>서울 전체</option>
                         <option>경기 전체</option>
@@ -661,7 +661,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                       <select
                         value={ageFilter}
                         onChange={(event) => setAgeFilter(event.target.value)}
-                        className="w-full appearance-none bg-transparent text-[0.96rem] font-medium text-white focus:outline-none"
+                        className="w-full appearance-none bg-transparent text-[0.88rem] font-medium text-white focus:outline-none"
                       >
                         <option>20대 - 30대</option>
                         <option>20대</option>
@@ -678,7 +678,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                       <select
                         value={timeFilter}
                         onChange={(event) => setTimeFilter(event.target.value)}
-                        className="w-full appearance-none bg-transparent text-[0.96rem] font-medium text-white focus:outline-none"
+                        className="w-full appearance-none bg-transparent text-[0.88rem] font-medium text-white focus:outline-none"
                       >
                         <option>전체</option>
                         <option>1시간 이내</option>
@@ -694,7 +694,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                       <select
                         value={typeFilter}
                         onChange={(event) => setTypeFilter(event.target.value)}
-                        className="w-full appearance-none bg-transparent text-[0.96rem] font-medium text-white focus:outline-none"
+                        className="w-full appearance-none bg-transparent text-[0.88rem] font-medium text-white focus:outline-none"
                       >
                         <option>전체</option>
                         <option>취미</option>
@@ -710,13 +710,13 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="rounded-[14px] border border-white/8 bg-[rgba(13,19,37,0.94)] px-4 py-3 text-[0.96rem] font-medium text-white"
+                    className="rounded-[14px] border border-white/8 bg-[rgba(13,19,37,0.94)] px-3 py-3 text-[0.88rem] font-medium text-white"
                   >
                     초기화
                   </button>
                   <button
                     type="button"
-                    className="rounded-[14px] bg-[linear-gradient(135deg,#6f56ff,#7b50f3)] px-4 py-3 text-[0.96rem] font-semibold text-white shadow-[0_18px_34px_rgba(94,63,225,0.34)]"
+                    className="rounded-[14px] bg-[linear-gradient(135deg,#6f56ff,#7b50f3)] px-3 py-3 text-[0.88rem] font-semibold text-white shadow-[0_18px_34px_rgba(94,63,225,0.34)]"
                   >
                     필터 적용
                   </button>
@@ -733,27 +733,27 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                   </div>
                 ) : (
                   displayedCards.map((card) => (
-                    <article key={card.postId} className="match-panel px-5 py-5">
-                      <div className="grid grid-cols-[96px_minmax(0,1fr)_120px_208px] items-center gap-5">
+                    <article key={card.postId} className="match-panel px-4 py-4">
+                      <div className="grid grid-cols-[84px_minmax(0,1fr)_104px_184px] items-center gap-4">
                         <div className="relative">
                           {card.isNew ? (
-                            <span className="absolute left-0 top-0 z-10 rounded-full bg-[linear-gradient(135deg,#efe7ff,#8f6dff)] px-2.5 py-1 text-[0.8rem] font-bold text-[#3f2abb]">
+                            <span className="absolute left-0 top-0 z-10 rounded-full bg-[linear-gradient(135deg,#efe7ff,#8f6dff)] px-2 py-1 text-[0.72rem] font-bold text-[#3f2abb]">
                               NEW
                             </span>
                           ) : null}
-                          <PlaceholderAvatar sizeClass="h-24 w-24" />
+                          <PlaceholderAvatar sizeClass="h-20 w-20" />
                         </div>
 
                         <div className="min-w-0">
                           <h3 className="match-card-title font-semibold text-white">{card.title}</h3>
-                          <div className="mt-3 flex flex-wrap gap-2">
+                          <div className="mt-2 flex flex-wrap gap-1.5">
                             {card.meta.tags.map((tag) => (
                               <span key={tag} className="match-pill">
                                 {tag}
                               </span>
                             ))}
                           </div>
-                          <p className="match-body-text mt-4 text-zinc-200">
+                          <p className="match-body-text mt-3 text-zinc-200">
                             <span className="font-semibold text-white">{card.userName}</span>
                             <span className="mx-3 text-zinc-500">·</span>
                             {card.meta.age}
@@ -766,7 +766,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                           </p>
                         </div>
 
-                        <div className="space-y-3 text-[0.96rem] text-zinc-300">
+                        <div className="space-y-2 text-[0.88rem] text-zinc-300">
                           <div className="flex items-center gap-2">
                             <FiUser className="text-zinc-400" />
                             <span>{card.meta.height}</span>
@@ -777,12 +777,12 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-end gap-4">
+                        <div className="flex items-center justify-end gap-3">
                           <button
                             type="button"
                             onClick={() => void handleRequestChat(card)}
                             disabled={requestChatMutation.isPending || loading}
-                            className="flex h-12 min-w-[138px] items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(135deg,rgba(111,86,255,0.92),rgba(82,58,207,0.92))] px-5 text-[0.92rem] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+                            className="flex h-10 min-w-[124px] items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(135deg,rgba(111,86,255,0.92),rgba(82,58,207,0.92))] px-4 text-[0.84rem] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
                           >
                             <FiMessageCircle className="text-[1rem]" />
                             대화 요청
@@ -790,7 +790,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                           <button
                             type="button"
                             onClick={() => handleBookmark(card.postId)}
-                            className="flex h-12 w-12 items-center justify-center rounded-[14px] border border-white/10 bg-[rgba(10,14,28,0.86)] text-zinc-300"
+                            className="flex h-10 w-10 items-center justify-center rounded-[14px] border border-white/10 bg-[rgba(10,14,28,0.86)] text-zinc-300"
                           >
                             <FiHeart
                               className={cx(
@@ -807,7 +807,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
               </section>
 
               <footer className="flex items-center justify-between px-2">
-                <p className="text-[0.85rem] text-zinc-500">© 2024 조각. All rights reserved.</p>
+                <p className="text-[0.8rem] text-zinc-500">© 2024 조각. All rights reserved.</p>
                 <div className="flex items-center gap-4 text-zinc-400">
                   <button type="button" className="text-sm">1</button>
                   <button type="button" className="text-sm">2</button>
@@ -818,18 +818,18 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
               </footer>
             </div>
 
-            <aside className="flex min-h-0 flex-col gap-4">
-              <section className="match-panel px-5 py-5">
+            <aside className="flex min-h-0 flex-col gap-3">
+              <section className="match-panel px-4 py-4">
                 <h3 className="chat-name-md font-semibold text-white">오늘의 매칭 현황</h3>
-                <div className="mt-5 flex items-center gap-5">
-                  <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#5c3df0_0deg,#7e5cff_220deg,rgba(255,255,255,0.08)_220deg,rgba(255,255,255,0.08)_360deg)]">
-                    <div className="flex h-[76px] w-[76px] items-center justify-center rounded-full bg-[#11172d] text-[1.6rem] font-semibold text-white">
+                <div className="mt-4 flex items-center gap-4">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#5c3df0_0deg,#7e5cff_220deg,rgba(255,255,255,0.08)_220deg,rgba(255,255,255,0.08)_360deg)]">
+                    <div className="flex h-[64px] w-[64px] items-center justify-center rounded-full bg-[#11172d] text-[1.3rem] font-semibold text-white">
                       3/5
                     </div>
                   </div>
                   <div>
                     <p className="text-[1.1rem] font-semibold text-white">오늘 남은 매칭 기회</p>
-                    <p className="mt-3 flex items-center gap-2 text-[0.88rem] text-zinc-300">
+                    <p className="mt-2 flex items-center gap-2 text-[0.8rem] text-zinc-300">
                       <FiShield className="text-emerald-400" />
                       매일 오전 6시에 초기화 돼요.
                     </p>
@@ -837,54 +837,54 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 </div>
               </section>
 
-              <section className="grid grid-cols-3 gap-3">
+              <section className="grid grid-cols-3 gap-2.5">
                 {stats.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={item.label} className="match-panel px-3 py-4 text-center">
-                      <Icon className={cx("mx-auto text-[1.55rem]", item.color)} />
-                      <p className="mt-4 text-[0.82rem] text-zinc-300">{item.label}</p>
-                      <p className="mt-3 text-[1rem] font-semibold text-white">{item.value}</p>
+                    <div key={item.label} className="match-panel px-3 py-3.5 text-center">
+                      <Icon className={cx("mx-auto text-[1.35rem]", item.color)} />
+                      <p className="mt-3 text-[0.75rem] text-zinc-300">{item.label}</p>
+                      <p className="mt-2 text-[0.92rem] font-semibold text-white">{item.value}</p>
                     </div>
                   );
                 })}
               </section>
 
-              <section className="match-panel px-5 py-5">
+              <section className="match-panel px-4 py-4">
                 <h3 className="chat-name-md font-semibold text-white">핵심 가이드</h3>
-                <div className="mt-5 space-y-4">
+                <div className="mt-4 space-y-3">
                   {guideItems.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <div key={item.title} className="flex items-start gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[rgba(91,79,180,0.16)]">
-                          <Icon className="text-[1.15rem] text-zinc-100" />
+                      <div key={item.title} className="flex items-start gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[rgba(91,79,180,0.16)]">
+                          <Icon className="text-[1rem] text-zinc-100" />
                         </div>
                         <div>
-                          <p className="text-[0.96rem] font-medium text-white">{item.title}</p>
+                          <p className="text-[0.88rem] font-medium text-white">{item.title}</p>
                           <p className="match-meta-text mt-1.5 text-zinc-400">{item.description}</p>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-                <button type="button" className="mt-5 flex items-center gap-2 text-[0.95rem] font-medium text-violet-300">
+                <button type="button" className="mt-4 flex items-center gap-2 text-[0.84rem] font-medium text-violet-300">
                   더 자세히 보기
                   <FiChevronRight />
                 </button>
               </section>
 
-              <section className="match-panel px-5 py-5">
+              <section className="match-panel px-4 py-4">
                 <h3 className="chat-name-md font-semibold text-white">신뢰 시스템</h3>
-                <div className="mt-5 grid grid-cols-3 divide-x divide-white/8">
+                <div className="mt-4 grid grid-cols-3 divide-x divide-white/8">
                   {trustItems.map((item) => {
                     const Icon = item.icon;
                     return (
                       <div key={item.title} className="px-3 text-center">
-                        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[rgba(90,82,160,0.18)]">
-                          <Icon className={cx("text-[1.4rem]", item.color)} />
+                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(90,82,160,0.18)]">
+                          <Icon className={cx("text-[1.15rem]", item.color)} />
                         </div>
-                        <p className="mt-3 text-[0.9rem] font-medium text-white">{item.title}</p>
+                        <p className="mt-2 text-[0.82rem] font-medium text-white">{item.title}</p>
                         <p className="match-meta-text mt-2 text-zinc-400">{item.description}</p>
                       </div>
                     );
@@ -892,7 +892,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 </div>
               </section>
 
-              <footer className="mt-auto flex items-center justify-end gap-6 px-1 text-[0.85rem] text-zinc-500">
+              <footer className="mt-auto flex items-center justify-end gap-5 px-1 text-[0.8rem] text-zinc-500">
                 <span>이용약관</span>
                 <span>개인정보처리방침</span>
                 <span>고객센터</span>
