@@ -204,30 +204,28 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(74,51,181,0.24),transparent_22%),radial-gradient(circle_at_top_right,rgba(41,16,109,0.14),transparent_18%),linear-gradient(180deg,#070b1c,#040814)] text-white">
-      <div className="mx-auto hidden h-screen max-w-[1920px] grid-cols-[220px_minmax(0,1fr)] overflow-hidden xl:grid">
-        <aside className="border-r border-white/7 bg-[linear-gradient(180deg,rgba(9,13,31,0.98),rgba(7,10,24,0.98))] px-4 py-5">
-          <div className="flex items-center gap-3 px-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,#6d4dff,#4f46e5)] text-white shadow-[0_10px_26px_rgba(95,66,255,0.32)]">
+      <div className="desktop-screen">
+        <aside className="desktop-sidebar">
+          <div className="desktop-brand">
+            <div className="desktop-brand-badge">
               <FiShield className="text-[1.1rem]" />
             </div>
             <div>
-              <p className="text-[1.15rem] font-semibold leading-none text-white">조각</p>
+              <p className="desktop-brand-text">조각</p>
             </div>
           </div>
 
-          <nav className="mt-7 space-y-2">
+          <nav className="desktop-nav">
             {desktopNav.map((item) => {
               const Icon = item.icon;
               const content = (
                 <div
                   className={cx(
-                    "flex items-center gap-4 rounded-[16px] px-4 py-3 text-[1rem] font-medium transition",
-                    item.active
-                      ? "bg-[linear-gradient(135deg,rgba(110,76,255,0.92),rgba(76,57,183,0.84))] text-white shadow-[0_16px_28px_rgba(66,41,160,0.28)]"
-                      : "text-zinc-300 hover:bg-white/4 hover:text-white",
+                    "desktop-nav-item",
+                    item.active && "desktop-nav-item-active",
                   )}
                 >
-                  <Icon className="text-[1.35rem]" />
+                  <Icon className="desktop-nav-icon" />
                   <span>{item.label}</span>
                 </div>
               );
@@ -249,32 +247,32 @@ export default function HomePage() {
           </nav>
         </aside>
 
-        <div className="h-screen overflow-hidden px-5 py-4">
-          <header className="flex items-center justify-between border-b border-white/6 px-3 pb-4">
+        <div className="desktop-content">
+          <header className="desktop-header">
             <div className="flex items-center gap-5">
-              <h1 className="text-[1.8rem] font-semibold leading-none text-white">홈</h1>
-              <p className="pt-1 text-[0.95rem] text-zinc-300">신뢰 기반 실시간 만남</p>
+              <h1 className="desktop-header-title">홈</h1>
+              <p className="desktop-header-copy">신뢰 기반 실시간 만남</p>
             </div>
-            <div className="flex items-center gap-5">
+            <div className="desktop-header-actions">
               <div className="relative">
                 <FiBell className="text-[1.45rem] text-white" />
                 <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#6f56ff] px-1 text-[0.68rem] font-semibold text-white">
                   3
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="desktop-header-avatar">
                 <div className="h-11 w-11 overflow-hidden rounded-full border border-white/10 bg-[linear-gradient(135deg,#3c2e7f,#171c35)]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img alt="" src="" className="h-full w-full object-cover opacity-0" />
                 </div>
-                <span className="text-[1.25rem] font-medium text-white">{profileName}</span>
+                <span className="desktop-header-avatar-name">{profileName}</span>
                 <FiChevronDown className="text-[1.2rem] text-zinc-300" />
               </div>
             </div>
           </header>
 
-          <div className="grid h-[calc(100vh-88px)] gap-5 pt-5 2xl:grid-cols-[minmax(0,1.62fr)_440px]">
-            <div className="flex min-h-0 flex-col gap-5">
+          <div className="desktop-main grid 2xl:grid-cols-[minmax(0,1.62fr)_440px]">
+            <div className="desktop-main-left">
               <section className="overflow-hidden rounded-[20px] border border-white/7 bg-[linear-gradient(135deg,rgba(14,23,43,0.98),rgba(10,14,30,0.96))] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
                 <div className="relative grid h-[304px] grid-cols-[1.02fr_0.98fr]">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.1),transparent_38%),linear-gradient(90deg,rgba(5,9,21,0.82),rgba(5,9,21,0.18)_52%,rgba(5,9,21,0.46))]" />
@@ -331,16 +329,16 @@ export default function HomePage() {
                 </div>
               </section>
 
-              <section className="rounded-[20px] border border-white/7 bg-[linear-gradient(180deg,rgba(10,15,31,0.98),rgba(8,12,26,0.96))] px-6 py-5 shadow-[0_24px_56px_rgba(0,0,0,0.25)]">
+              <section className="desktop-panel">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <h3 className="text-[1rem] font-semibold text-white">실시간 매칭 카드</h3>
-                    <div className="flex items-center gap-2 text-[0.9rem] text-zinc-300">
+                    <h3 className="desktop-section-title">실시간 매칭 카드</h3>
+                    <div className="flex items-center gap-2 desktop-meta">
                       <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
                       현재 접속 중 128명
                     </div>
                   </div>
-                  <button type="button" className="flex items-center gap-2 text-[0.9rem] text-zinc-300">
+                  <button type="button" className="flex items-center gap-2 desktop-meta">
                     더보기
                     <FiChevronRight />
                   </button>
@@ -395,8 +393,8 @@ export default function HomePage() {
                 </div>
               </section>
 
-              <section className="rounded-[20px] border border-white/7 bg-[linear-gradient(180deg,rgba(10,15,31,0.98),rgba(8,12,26,0.96))] px-6 py-5 shadow-[0_24px_56px_rgba(0,0,0,0.25)]">
-                <h3 className="text-[1rem] font-semibold text-white">신뢰 시스템 안내</h3>
+              <section className="desktop-panel">
+                <h3 className="desktop-section-title">신뢰 시스템 안내</h3>
                 <div className="mt-5 grid grid-cols-3 divide-x divide-white/8 overflow-hidden rounded-[16px]">
                   {systemItems.map((item) => {
                     const Icon = item.icon;
@@ -426,10 +424,10 @@ export default function HomePage() {
               <p className="px-2 text-[0.85rem] text-zinc-500">© 2024 조각. All rights reserved.</p>
             </div>
 
-            <aside className="flex min-h-0 flex-col gap-5">
-              <section className="rounded-[18px] border border-white/7 bg-[linear-gradient(180deg,rgba(14,19,38,0.98),rgba(11,16,31,0.96))] px-6 py-5">
+            <aside className="desktop-main-right">
+              <section className="desktop-side-panel">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-[1.35rem] font-semibold text-white">오늘 남은 매칭 기회</h3>
+                  <h3 className="desktop-side-title">오늘 남은 매칭 기회</h3>
                   <span className="text-[1rem] text-white">3 / 5</span>
                 </div>
                 <div className="mt-4 h-3 overflow-hidden rounded-full bg-white/8">
@@ -454,10 +452,10 @@ export default function HomePage() {
                 })}
               </section>
 
-              <section className="rounded-[18px] border border-white/7 bg-[linear-gradient(135deg,rgba(67,39,147,0.78),rgba(39,23,84,0.82))] px-6 py-5">
+              <section className="desktop-accent-panel">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-[1.35rem] font-semibold text-white">오늘의 한마디</h3>
+                    <h3 className="desktop-side-title">오늘의 한마디</h3>
                     <p className="mt-4 text-[1rem] text-white/95">
                       “진짜 만남은 신뢰에서 시작됩니다.”
                     </p>
@@ -468,9 +466,9 @@ export default function HomePage() {
                 </div>
               </section>
 
-              <section className="rounded-[18px] border border-white/7 bg-[linear-gradient(180deg,rgba(14,19,38,0.98),rgba(11,16,31,0.96))] px-6 py-5">
+              <section className="desktop-side-panel">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-[1.35rem] font-semibold text-white">공지사항</h3>
+                  <h3 className="desktop-side-title">공지사항</h3>
                   <button type="button" className="flex items-center gap-2 text-[0.9rem] text-zinc-300">
                     더보기
                     <FiChevronRight />
@@ -494,8 +492,8 @@ export default function HomePage() {
                 </div>
               </section>
 
-              <section className="rounded-[18px] border border-white/7 bg-[linear-gradient(135deg,rgba(66,42,171,0.92),rgba(35,24,84,0.92))] px-6 py-5">
-                <h3 className="text-[1.35rem] font-semibold text-white">내 신뢰 포인트</h3>
+              <section className="desktop-point-panel">
+                <h3 className="desktop-side-title">내 신뢰 포인트</h3>
                 <div className="mt-5 flex items-center gap-4">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5f50ff,#5640f0)]">
                     <FiShield className="text-[1.75rem] text-white" />

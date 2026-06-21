@@ -669,4 +669,119 @@
     font-size: var(--home-tab-size);
     line-height: 1.2;
   }
+
+  .desktop-screen {
+    @apply mx-auto hidden h-screen max-w-[1920px] overflow-hidden xl:grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .desktop-sidebar {
+    @apply border-r border-white/7 px-4 py-5;
+    background: linear-gradient(180deg, rgba(9, 13, 31, 0.98), rgba(7, 10, 24, 0.98));
+  }
+
+  .desktop-brand {
+    @apply flex items-center gap-3 px-3;
+  }
+
+  .desktop-brand-badge {
+    @apply flex h-10 w-10 items-center justify-center rounded-[14px] text-white;
+    background: linear-gradient(135deg, #6d4dff, #4f46e5);
+    box-shadow: 0 10px 26px rgba(95, 66, 255, 0.32);
+  }
+
+  .desktop-brand-text {
+    @apply text-[1.15rem] font-semibold leading-none text-white;
+  }
+
+  .desktop-nav {
+    @apply mt-7 space-y-2;
+  }
+
+  .desktop-nav-item {
+    @apply flex items-center gap-4 rounded-[16px] px-4 py-3 text-[1rem] font-medium text-zinc-300 transition hover:bg-white/4 hover:text-white;
+  }
+
+  .desktop-nav-item-active {
+    @apply text-white;
+    background: linear-gradient(135deg, rgba(110, 76, 255, 0.92), rgba(76, 57, 183, 0.84));
+    box-shadow: 0 16px 28px rgba(66, 41, 160, 0.28);
+  }
+
+  .desktop-nav-icon {
+    @apply text-[1.35rem];
+  }
+
+  .desktop-content {
+    @apply h-screen overflow-hidden px-5 py-4;
+  }
+
+  .desktop-header {
+    @apply flex items-center justify-between border-b border-white/6 px-3 pb-4;
+  }
+
+  .desktop-header-title {
+    @apply text-[1.8rem] font-semibold leading-none text-white;
+  }
+
+  .desktop-header-copy {
+    @apply pt-1 text-[0.95rem] text-zinc-300;
+  }
+
+  .desktop-header-actions {
+    @apply flex items-center gap-5;
+  }
+
+  .desktop-header-avatar {
+    @apply flex items-center gap-3;
+  }
+
+  .desktop-header-avatar-name {
+    @apply text-[1.25rem] font-medium text-white;
+  }
+
+  .desktop-main {
+    @apply h-[calc(100vh-88px)] gap-5 pt-5;
+  }
+
+  .desktop-main-left {
+    @apply flex min-h-0 flex-col gap-5;
+  }
+
+  .desktop-main-right {
+    @apply flex min-h-0 flex-col gap-5;
+  }
+
+  .desktop-panel {
+    @apply rounded-[20px] border border-white/7 px-6 py-5;
+    background: linear-gradient(180deg, rgba(10, 15, 31, 0.98), rgba(8, 12, 26, 0.96));
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.25);
+  }
+
+  .desktop-side-panel {
+    @apply rounded-[18px] border border-white/7 px-6 py-5;
+    background: linear-gradient(180deg, rgba(14, 19, 38, 0.98), rgba(11, 16, 31, 0.96));
+  }
+
+  .desktop-accent-panel {
+    @apply rounded-[18px] border border-white/7 px-6 py-5;
+    background: linear-gradient(135deg, rgba(67, 39, 147, 0.78), rgba(39, 23, 84, 0.82));
+  }
+
+  .desktop-point-panel {
+    @apply rounded-[18px] border border-white/7 px-6 py-5;
+    background: linear-gradient(135deg, rgba(66, 42, 171, 0.92), rgba(35, 24, 84, 0.92));
+  }
+
+  .desktop-section-title {
+    @apply text-[1rem] font-semibold text-white;
+  }
+
+  .desktop-side-title {
+    @apply text-[1.35rem] font-semibold text-white;
+  }
+
+  .desktop-meta {
+    @apply text-[0.9rem] text-zinc-300;
+  }
 }

@@ -666,10 +666,10 @@ export default function ChatExperience({ mobileView, selectedChatId }: ChatExper
 
   return (
     <div className="chat-page-bg">
-      <div className="mx-auto hidden h-screen max-w-[1920px] grid-cols-[216px_minmax(0,1fr)] overflow-hidden xl:grid">
-        <aside className="flex h-screen flex-col border-r border-white/7 bg-[linear-gradient(180deg,rgba(9,13,31,0.98),rgba(7,10,24,0.98))] px-4 py-6">
-          <div className="flex items-center gap-3 px-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,#6d4dff,#4f46e5)] text-white shadow-[0_10px_26px_rgba(95,66,255,0.32)]">
+      <div className="desktop-screen">
+        <aside className="desktop-sidebar flex h-screen flex-col">
+          <div className="desktop-brand">
+            <div className="desktop-brand-badge">
               <FiShield className="text-[1.1rem]" />
             </div>
             <div>
@@ -677,7 +677,7 @@ export default function ChatExperience({ mobileView, selectedChatId }: ChatExper
             </div>
           </div>
 
-          <nav className="mt-8 space-y-2">
+          <nav className="desktop-nav">
             {desktopNav.map((item) => {
               const Icon = item.icon;
 
@@ -685,13 +685,11 @@ export default function ChatExperience({ mobileView, selectedChatId }: ChatExper
                 <Link key={item.label} href={item.href} className="block">
                   <div
                     className={cx(
-                      "flex items-center gap-4 rounded-[16px] px-4 py-3 text-[1rem] font-medium transition",
-                      item.active
-                        ? "bg-[linear-gradient(135deg,rgba(110,76,255,0.92),rgba(76,57,183,0.84))] text-white shadow-[0_16px_28px_rgba(66,41,160,0.28)]"
-                        : "text-zinc-300 hover:bg-white/4 hover:text-white",
+                      "desktop-nav-item",
+                      item.active && "desktop-nav-item-active",
                     )}
                   >
-                    <Icon className="text-[1.35rem]" />
+                    <Icon className="desktop-nav-icon" />
                     <span>{item.label}</span>
                   </div>
                 </Link>
@@ -726,27 +724,27 @@ export default function ChatExperience({ mobileView, selectedChatId }: ChatExper
           </div>
         </aside>
 
-        <div className="h-screen overflow-hidden px-6 py-5">
-          <header className="flex items-center justify-between border-b border-white/6 px-1 pb-5">
+        <div className="desktop-content">
+          <header className="desktop-header">
             <div className="flex items-center gap-5">
-              <h1 className="chat-page-title font-semibold text-white">채팅</h1>
-              <p className="chat-body-text text-zinc-300">진짜 만남은 신뢰에서 시작됩니다.</p>
+              <h1 className="desktop-header-title">채팅</h1>
+              <p className="desktop-header-copy">진짜 만남은 신뢰에서 시작됩니다.</p>
             </div>
-            <div className="flex items-center gap-5">
+            <div className="desktop-header-actions">
               <div className="relative">
                 <FiBell className="text-[1.45rem] text-white" />
                 <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#6f56ff] px-1 text-[0.68rem] font-semibold text-white">
                   3
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="desktop-header-avatar">
                 <Avatar
                   src={profileQuery.data?.profile?.photos?.[0]}
                   alt={profileName}
                   sizeClass="h-11 w-11"
                   fallback={profileName.slice(0, 1)}
                 />
-                <span className="chat-name-md font-medium text-white">{profileName}</span>
+                <span className="desktop-header-avatar-name">{profileName}</span>
                 <FiChevronDown className="text-zinc-400" />
               </div>
             </div>
@@ -755,7 +753,7 @@ export default function ChatExperience({ mobileView, selectedChatId }: ChatExper
           {error && <div className="alert-error mt-4">{error}</div>}
           {notice && <div className="alert-success mt-4">{notice}</div>}
 
-          <div className="grid h-[calc(100vh-114px)] grid-cols-[350px_minmax(0,1fr)_320px] gap-4 pt-4">
+          <div className="desktop-main grid grid-cols-[350px_minmax(0,1fr)_320px]">
             <section className="chat-panel flex min-h-0 flex-col overflow-hidden">
               <div className="border-b border-white/7 px-5 pt-3">
                 <div className="flex gap-4">

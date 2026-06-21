@@ -351,29 +351,27 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(74,51,181,0.24),transparent_22%),radial-gradient(circle_at_top_right,rgba(41,16,109,0.14),transparent_18%),linear-gradient(180deg,#070b1c,#040814)] text-white">
-      <div className="mx-auto hidden h-screen max-w-[1920px] grid-cols-[210px_minmax(0,1fr)] overflow-hidden xl:grid">
-        <aside className="border-r border-white/7 bg-[linear-gradient(180deg,rgba(9,13,31,0.98),rgba(7,10,24,0.98))] px-4 py-4">
-          <div className="flex items-center gap-3 px-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,#6d4dff,#4f46e5)] text-white shadow-[0_10px_26px_rgba(95,66,255,0.32)]">
+      <div className="desktop-screen">
+        <aside className="desktop-sidebar">
+          <div className="desktop-brand">
+            <div className="desktop-brand-badge">
               <FiShield className="text-[1.1rem]" />
             </div>
-            <p className="text-[1.15rem] font-semibold leading-none text-white">TrustMate</p>
+            <p className="desktop-brand-text">TrustMate</p>
           </div>
 
-          <nav className="mt-6 space-y-1.5">
+          <nav className="desktop-nav">
             {desktopNav.map((item) => {
               const Icon = item.icon;
               const content = (
                 <div
                   className={cx(
-                    "flex items-center justify-between gap-4 rounded-[16px] px-4 py-2.5 text-[0.95rem] font-medium transition",
-                    item.active
-                      ? "bg-[linear-gradient(135deg,rgba(110,76,255,0.92),rgba(76,57,183,0.84))] text-white shadow-[0_16px_28px_rgba(66,41,160,0.28)]"
-                      : "text-zinc-300 hover:bg-white/4 hover:text-white",
+                    "desktop-nav-item justify-between",
+                    item.active && "desktop-nav-item-active",
                   )}
                 >
                   <span className="flex items-center gap-4">
-                    <Icon className="text-[1.35rem]" />
+                    <Icon className="desktop-nav-icon" />
                     <span>{item.label}</span>
                   </span>
                   {item.badge && (
@@ -431,22 +429,22 @@ export default function ProfilePage() {
           </div>
         </aside>
 
-        <div className="h-screen overflow-hidden px-4 py-3">
-          <header className="flex items-center justify-between border-b border-white/6 px-2 pb-3">
+        <div className="desktop-content">
+          <header className="desktop-header">
             <div>
-              <h1 className="text-[1.75rem] font-semibold leading-none text-white">내 정보</h1>
-              <p className="mt-2 text-[0.9rem] text-zinc-300">회원님의 정보를 확인하고 관리하세요.</p>
+              <h1 className="desktop-header-title">내 정보</h1>
+              <p className="desktop-header-copy">회원님의 정보를 확인하고 관리하세요.</p>
             </div>
-            <div className="flex items-center gap-5">
+            <div className="desktop-header-actions">
               <div className="relative">
                 <FiBell className="text-[1.45rem] text-white" />
                 <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#6f56ff] px-1 text-[0.68rem] font-semibold text-white">
                   3
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="desktop-header-avatar">
                 <ProfileAvatar name={displayName} photo={displayPhoto} sizeClassName="h-11 w-11" />
-                <span className="text-[1.02rem] font-medium text-white">{displayName}</span>
+                <span className="desktop-header-avatar-name">{displayName}</span>
                 <FiChevronDown className="text-[1.2rem] text-zinc-300" />
               </div>
             </div>
@@ -459,8 +457,8 @@ export default function ProfilePage() {
             </div>
           )}
 
-          <main className="space-y-3 px-2 pb-2 pt-3 text-[0.95rem]">
-            <section className="grid gap-3 2xl:grid-cols-[minmax(0,1.22fr)_minmax(0,0.78fr)]">
+          <main className="desktop-main space-y-5">
+            <section className="grid gap-5 2xl:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)]">
               <div className="surface-panel overflow-hidden p-0">
                 <div className="grid gap-4 px-6 py-5 lg:grid-cols-[auto_minmax(0,1fr)_190px]">
                   <div className="relative w-fit">
@@ -601,7 +599,7 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-1">
+              <div className="grid gap-5 md:grid-cols-2 2xl:grid-cols-1">
                 <div className="surface-panel">
                   <p className="text-[0.95rem] text-zinc-300">신뢰 점수</p>
                   <div className="mt-4 flex items-center gap-3">
@@ -654,7 +652,7 @@ export default function ProfilePage() {
               </div>
             </section>
 
-            <section className="grid gap-3 2xl:grid-cols-[minmax(0,1.04fr)_minmax(0,0.66fr)_minmax(0,0.6fr)]">
+            <section className="grid gap-5 2xl:grid-cols-[minmax(0,1.02fr)_minmax(0,0.68fr)_minmax(0,0.64fr)]">
               <div className="surface-panel">
                 <SectionHeader
                   title="프로필 정보"
@@ -753,7 +751,7 @@ export default function ProfilePage() {
               </div>
             </section>
 
-            <section className="grid gap-3 2xl:grid-cols-[minmax(0,1.34fr)_minmax(0,0.48fr)]">
+            <section className="grid gap-5 2xl:grid-cols-[minmax(0,1.3fr)_minmax(0,0.52fr)]">
               <div className="surface-panel">
                 <SectionHeader title="나의 최근 활동" />
                 <div className="mt-5 space-y-3">

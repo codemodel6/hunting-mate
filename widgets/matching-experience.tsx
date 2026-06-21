@@ -464,16 +464,16 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
 
   return (
     <div className="match-page-bg">
-      <div className="mx-auto hidden h-screen max-w-[1920px] grid-cols-[208px_minmax(0,1fr)] overflow-hidden xl:grid">
-        <aside className="flex h-screen flex-col border-r border-white/7 bg-[linear-gradient(180deg,rgba(9,13,31,0.98),rgba(7,10,24,0.98))] px-4 py-4">
-          <div className="flex items-center gap-3 px-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,#6d4dff,#4f46e5)] text-white shadow-[0_10px_26px_rgba(95,66,255,0.32)]">
+      <div className="desktop-screen">
+        <aside className="desktop-sidebar flex h-screen flex-col">
+          <div className="desktop-brand">
+            <div className="desktop-brand-badge">
               <FiShield className="text-[1.1rem]" />
             </div>
-            <p className="chat-brand-title font-semibold leading-none text-white">조각</p>
+            <p className="desktop-brand-text">조각</p>
           </div>
 
-          <nav className="mt-6 space-y-1.5">
+          <nav className="desktop-nav">
             {desktopNav.map((item) => {
               const Icon = item.icon;
 
@@ -481,14 +481,14 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 <Link key={item.label} href={item.href} className="block">
                   <div
                     className={cx(
-                      "relative flex items-center gap-4 rounded-[16px] px-4 py-2.5 text-[0.95rem] font-medium transition",
-                      item.active
-                        ? "bg-[linear-gradient(135deg,rgba(110,76,255,0.92),rgba(76,57,183,0.84))] text-white shadow-[0_16px_28px_rgba(66,41,160,0.28)]"
-                        : "text-zinc-300 hover:bg-white/4 hover:text-white",
+                      "desktop-nav-item relative justify-between",
+                      item.active && "desktop-nav-item-active",
                     )}
                   >
-                    <Icon className="text-[1.35rem]" />
-                    <span>{item.label}</span>
+                    <span className="flex items-center gap-4">
+                      <Icon className="desktop-nav-icon" />
+                      <span>{item.label}</span>
+                    </span>
                     {item.badge ? (
                       <span className="ml-auto flex h-6 min-w-6 items-center justify-center rounded-full bg-[#ff4a4a] px-1.5 text-[0.72rem] font-semibold text-white">
                         {item.badge}
@@ -537,16 +537,16 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
           </div>
         </aside>
 
-        <div className="h-screen overflow-hidden px-4 py-3">
-          <header className="flex items-center justify-between border-b border-white/6 px-2 pb-3">
+        <div className="desktop-content">
+          <header className="desktop-header">
             <div>
-              <h1 className="match-page-title font-semibold text-white">매칭</h1>
-              <p className="match-copy-text mt-2 text-zinc-300">
+              <h1 className="desktop-header-title">매칭</h1>
+              <p className="desktop-header-copy">
                 당신과 잘 맞는 사람들의 만남 글을 확인하고, 대화를 요청해보세요.
               </p>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="desktop-header-actions">
               <button
                 type="button"
                 onClick={handleMatchingActivation}
@@ -577,17 +577,17 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="desktop-header-avatar">
                 <PlaceholderAvatar sizeClass="h-11 w-11" />
-                <span className="chat-name-md font-medium text-white">{profileName}</span>
+                <span className="desktop-header-avatar-name">{profileName}</span>
                 <FiChevronDown className="text-zinc-400" />
               </div>
             </div>
           </header>
 
-          <div className="grid h-[calc(100vh-84px)] grid-cols-[minmax(0,1.68fr)_276px] gap-3 pt-3">
-            <div className="flex min-h-0 flex-col gap-3">
-              <section className="match-panel px-4 py-3">
+          <div className="desktop-main grid 2xl:grid-cols-[minmax(0,1.62fr)_440px]">
+            <div className="desktop-main-left">
+              <section className="desktop-panel px-4 py-4">
                 <div className="flex items-center justify-between gap-4 border-b border-white/7 px-1 pb-3">
                   <div className="flex items-center gap-4">
                     {matchTabs.map((tab) => (
@@ -818,8 +818,8 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
               </footer>
             </div>
 
-            <aside className="flex min-h-0 flex-col gap-3">
-              <section className="match-panel px-4 py-4">
+            <aside className="desktop-main-right">
+              <section className="desktop-side-panel px-4 py-4">
                 <h3 className="chat-name-md font-semibold text-white">오늘의 매칭 현황</h3>
                 <div className="mt-4 flex items-center gap-4">
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#5c3df0_0deg,#7e5cff_220deg,rgba(255,255,255,0.08)_220deg,rgba(255,255,255,0.08)_360deg)]">
@@ -837,7 +837,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 </div>
               </section>
 
-              <section className="grid grid-cols-3 gap-2.5">
+              <section className="grid grid-cols-3 gap-3">
                 {stats.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -850,7 +850,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 })}
               </section>
 
-              <section className="match-panel px-4 py-4">
+              <section className="desktop-side-panel px-4 py-4">
                 <h3 className="chat-name-md font-semibold text-white">핵심 가이드</h3>
                 <div className="mt-4 space-y-3">
                   {guideItems.map((item) => {
@@ -874,7 +874,7 @@ export default function MatchingExperience({ mobileView = "list" }: MatchExperie
                 </button>
               </section>
 
-              <section className="match-panel px-4 py-4">
+              <section className="desktop-side-panel px-4 py-4">
                 <h3 className="chat-name-md font-semibold text-white">신뢰 시스템</h3>
                 <div className="mt-4 grid grid-cols-3 divide-x divide-white/8">
                   {trustItems.map((item) => {
